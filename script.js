@@ -24,7 +24,7 @@ class Portfolio {
                 description: '子ども向けの数の概念を学ぶ教育アプリ。親が設定した数だけアイテムを表示し、カウンティングゲームで学習できます。',
                 category: 'education',
                 technologies: ['HTML5', 'CSS3', 'JavaScript', 'LocalStorage'],
-                liveUrl: '../app/001-number-learning/index.html',
+                liveUrl: 'https://euro0707.github.io/app100/app/001-number-learning/',
                 githubUrl: 'https://github.com/euro0707/app100/tree/main/app/001-number-learning',
                 completedDate: '2025-07-27',
                 features: ['数の表示', 'カウンティングゲーム', '学習記録', '進捗統計'],
