@@ -28,14 +28,27 @@ class Portfolio {
                 githubUrl: 'https://github.com/euro0707/app100/tree/main/app/001-number-learning',
                 completedDate: '2025-07-27',
                 features: ['数の表示', 'カウンティングゲーム', '学習記録', '進捗統計'],
-                image: null, // プレースホルダー画像を後で追加
+                image: null,
+                status: 'completed'
+            },
+            {
+                id: '002',
+                title: '動物と食べ物マッチングゲーム',
+                description: '4〜6歳の子ども向けの教育的マッチングゲーム。動物とその食べ物を正しくペアにすることで学習します。',
+                category: 'game',
+                technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+                liveUrl: 'https://euro0707.github.io/app100/app/002-animal-food-matching/',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app/002-animal-food-matching',
+                completedDate: '2025-07-27',
+                features: ['動的ヒントシステム', '段階的進行', '学習統計', 'レスポンシブデザイン'],
+                image: null,
                 status: 'completed'
             }
             // 他のアプリは順次追加
         ];
 
-        // 残り99個のプレースホルダー
-        for (let i = 2; i <= 100; i++) {
+        // 残り98個のプレースホルダー
+        for (let i = 3; i <= 100; i++) {
             this.apps.push({
                 id: String(i).padStart(3, '0'),
                 title: `アプリ #${i}`,
