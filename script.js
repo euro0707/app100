@@ -43,12 +43,25 @@ class Portfolio {
                 features: ['動的ヒントシステム', '段階的進行', '学習統計', 'レスポンシブデザイン'],
                 image: null,
                 status: 'completed'
+            },
+            {
+                id: '003',
+                title: '色と形の記憶ゲーム',
+                description: '4〜6歳の子ども向けの記憶力向上ゲーム。色々な形が順番に表示され、覚えた順番でタップして遊びます。',
+                category: 'education',
+                technologies: ['HTML5', 'CSS3', 'JavaScript', 'Animation'],
+                liveUrl: 'https://euro0707.github.io/app100/app/003-memory-game/',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app/003-memory-game',
+                completedDate: '2025-07-27',
+                features: ['段階的難易度', '親向けヒント', '視覚的フィードバック', '記憶力トレーニング'],
+                image: null,
+                status: 'completed'
             }
             // 他のアプリは順次追加
         ];
 
-        // 残り98個のプレースホルダー
-        for (let i = 3; i <= 100; i++) {
+        // 残り97個のプレースホルダー
+        for (let i = 4; i <= 100; i++) {
             this.apps.push({
                 id: String(i).padStart(3, '0'),
                 title: `アプリ #${i}`,
