@@ -198,7 +198,7 @@ class MemoryGame {
             setTimeout(() => this.gameComplete(), 2000);
         } else {
             // 次のレベルへ
-            this.updateParentHint('レベルクリア！お子さんを褒めてあげてください。次のレベルに挑戦しますか？');
+            this.updateParentHint('レベルクリア！次のレベルに挑戦しますか？');
             document.getElementById('nextLevelButton').style.display = 'inline-block';
         }
     }
