@@ -17,6 +17,7 @@ class AnimalFoodMatchingGame {
         this.selectedAnimal = null;
         this.selectedFood = null;
         this.gameCompleted = false;
+        this.autoProgressTimer = null;
 
         this.init();
     }
@@ -80,11 +81,42 @@ class AnimalFoodMatchingGame {
     }
 
     selectItem(card, item, type) {
+        console.log(`🔍 selectItem: ${item.name} (${type}), currentStep: ${this.currentStep}, completed: ${card.classList.contains('completed')}`);
+        
         // 現在のステップのペアが正解済みの場合は選択不可
-        if (this.currentStep >= this.animalFoodPairs.length) return;
+        if (this.currentStep >= this.animalFoodPairs.length) {
+            console.log('❌ ゲーム終了済み - 選択不可');
+            return;
+        }
         
         // 無効化されたカードは選択不可
-        if (card.classList.contains('completed') || card.style.pointerEvents === 'none') return;
+        if (card.classList.contains('completed') || card.style.pointerEvents === 'none') {
+            console.log('❌ 無効化されたカード - 選択不可');
+            return;
+        }
+
+        // 自動進行タイマーをキャンセル（ユーザーが次の選択を始めた場合）
+        if (this.autoProgressTimer) {
+            console.log('⏰ 自動進行をキャンセル - ユーザーが選択中');
+            clearTimeout(this.autoProgressTimer);
+            this.autoProgressTimer = null;
+            
+            // currentStepを手動で進める（自動進行がキャンセルされたため）
+            this.currentStep++;
+            console.log(`📈 currentStep手動更新: ${this.currentStep}`);
+            
+            // 次へボタンを非表示にして、チェックボタンを有効にする
+            document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('checkButton').style.display = 'inline-block';
+            document.getElementById('resetButton').style.display = 'inline-block';
+            // 結果エリアも非表示にする
+            this.hideResult();
+            // 統計とヒントを更新
+            this.updateStats();
+            this.updateHint();
+            // 完了済みカードを無効化
+            this.disableCompletedCards();
+        }
 
         // 同じタイプの他のカードの選択状態をリセット
         document.querySelectorAll(`.item-card[data-type="${type}"]`).forEach(c => {
@@ -96,8 +128,10 @@ class AnimalFoodMatchingGame {
 
         if (type === 'animal') {
             this.selectedAnimal = item;
+            console.log(`✅ 動物選択: ${item.name}`);
         } else {
             this.selectedFood = item;
+            console.log(`✅ 食べ物選択: ${item.name}`);
         }
 
         this.updateSelectionDisplay();
@@ -128,12 +162,15 @@ class AnimalFoodMatchingGame {
 
     updateCheckButton() {
         const checkButton = document.getElementById('checkButton');
-        checkButton.disabled = !(this.selectedAnimal && this.selectedFood);
+        const shouldEnable = !!(this.selectedAnimal && this.selectedFood);
+        checkButton.disabled = !shouldEnable;
+        console.log(`🔘 checkButton: ${shouldEnable ? 'enabled' : 'disabled'} (動物: ${this.selectedAnimal?.name || 'なし'}, 食べ物: ${this.selectedFood?.name || 'なし'})`);
     }
 
     setupEventListeners() {
         // チェックボタン
         document.getElementById('checkButton').addEventListener('click', () => {
+            console.log(`🔥 checkButton clicked! currentStep: ${this.currentStep}, 動物: ${this.selectedAnimal?.name}, 食べ物: ${this.selectedFood?.name}`);
             this.checkMatch();
         });
 
@@ -162,6 +199,9 @@ class AnimalFoodMatchingGame {
         const correctPair = this.animalFoodPairs[this.currentStep];
         const isCorrect = this.selectedAnimal.name === correctPair.animal.name && 
                          this.selectedFood.name === correctPair.food.name;
+        
+        console.log(`ステップ ${this.currentStep + 1}: ${this.selectedAnimal.name} + ${this.selectedFood.name} = ${isCorrect ? '正解' : '不正解'}`);
+        console.log(`正解: ${correctPair.animal.name} + ${correctPair.food.name}`);
 
         this.showResult(isCorrect);
         
@@ -179,14 +219,22 @@ class AnimalFoodMatchingGame {
                 this.updateHintForCorrectAnswer();
             }, 1000);
             
+            // まず次へボタンを表示
             setTimeout(() => {
+                this.showNextButton();
+            }, 1500);
+            
+            // その後自動進行
+            this.autoProgressTimer = setTimeout(() => {
+                console.log('⏰ 自動進行タイマー発火');
                 this.currentStep++;
                 if (this.currentStep >= this.animalFoodPairs.length) {
                     this.completeGame();
                 } else {
-                    this.showNextButton();
+                    this.nextStep();
                 }
-            }, 2000);
+                this.autoProgressTimer = null;
+            }, 3000);
         } else {
             this.highlightIncorrectCards();
             
@@ -251,6 +299,14 @@ class AnimalFoodMatchingGame {
     }
 
     nextStep() {
+        console.log(`🔄 nextStep: ${this.currentStep} → ${this.currentStep + 1}`);
+        
+        // 自動進行タイマーをクリア
+        if (this.autoProgressTimer) {
+            clearTimeout(this.autoProgressTimer);
+            this.autoProgressTimer = null;
+        }
+        
         // UI をリセット
         document.getElementById('checkButton').style.display = 'inline-block';
         document.getElementById('resetButton').style.display = 'inline-block';
@@ -263,6 +319,8 @@ class AnimalFoodMatchingGame {
 
         // 全ての正解済みカードを無効化（累積的に）
         this.disableCompletedCards();
+        
+        console.log(`✅ nextStep完了: currentStep = ${this.currentStep}`);
     }
 
     resetSelection() {
