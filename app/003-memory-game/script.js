@@ -101,7 +101,7 @@ class MemoryGame {
         
         this.isShowingSequence = false;
         this.updatePhase('ready-for-memory');
-        this.updateParentHint('すべて覚えられましたか？今度はお子さんが同じ順番でタップする番です！');
+        this.updateParentHint('覚えられましたか？');
         
         // 記憶テスト開始ボタンを表示
         document.getElementById('startMemoryButton').style.display = 'inline-block';
