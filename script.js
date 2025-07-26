@@ -25,7 +25,7 @@ class Portfolio {
                 category: 'education',
                 technologies: ['HTML5', 'CSS3', 'JavaScript', 'LocalStorage'],
                 liveUrl: '../app/001-number-learning/index.html',
-                githubUrl: 'https://github.com/euro0707/100-apps/tree/main/001-number-learning',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app/001-number-learning',
                 completedDate: '2025-07-27',
                 features: ['数の表示', 'カウンティングゲーム', '学習記録', '進捗統計'],
                 image: null, // プレースホルダー画像を後で追加
