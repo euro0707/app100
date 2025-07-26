@@ -235,7 +235,7 @@ class MemoryGame {
         this.currentLevel++;
         this.hideResult();
         this.updatePhase('ready');
-        this.updateParentHint(`レベル${this.currentLevel}に挑戦！難しくなりますが、お子さんを応援してあげてください。`);
+        this.updateParentHint(`レベル${this.currentLevel}に挑戦！`);
         
         // ボタンをリセット
         document.getElementById('startButton').style.display = 'inline-block';
