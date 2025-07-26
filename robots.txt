@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Block access to admin or sensitive files (if any)
+Disallow: /admin/
+Disallow: /*.log$
