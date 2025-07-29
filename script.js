@@ -56,12 +56,25 @@ class Portfolio {
                 features: ['段階的難易度', '親向けヒント', '視覚的フィードバック', '記憶力トレーニング'],
                 image: null,
                 status: 'completed'
+            },
+            {
+                id: '004',
+                title: '乗り物パズル',
+                description: '4〜6歳の子ども向けドラッグ&ドロップパズルゲーム。車、電車、飛行機の3段階難易度で空間認識力を育みます。',
+                category: 'game',
+                technologies: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Drag & Drop API'],
+                liveUrl: 'https://euro0707.github.io/app100/app/004-vehicle-puzzle/',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app/004-vehicle-puzzle',
+                completedDate: '2025-07-29',
+                features: ['3段階難易度', 'ドラッグ&ドロップ操作', 'プレースホルダー表示', '正解フィードバック'],
+                image: null,
+                status: 'completed'
             }
             // 他のアプリは順次追加
         ];
 
-        // 残り97個のプレースホルダー
-        for (let i = 4; i <= 100; i++) {
+        // 残り96個のプレースホルダー
+        for (let i = 5; i <= 100; i++) {
             this.apps.push({
                 id: String(i).padStart(3, '0'),
                 title: `アプリ #${i}`,
