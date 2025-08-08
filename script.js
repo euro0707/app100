@@ -69,12 +69,25 @@ class Portfolio {
                 features: ['3段階難易度', 'ドラッグ&ドロップ操作', 'プレースホルダー表示', '正解フィードバック'],
                 image: null,
                 status: 'completed'
+            },
+            {
+                id: '005',
+                title: 'これなーんだ？おえかきクイズ',
+                description: '4〜6歳の子ども向けの知育アプリ。ヒントをもとに自由にお絵描きして、AIが答えを当ててくれるインタラクティブなクイズゲーム。',
+                category: 'education',
+                technologies: ['HTML5 Canvas', 'CSS3', 'JavaScript', 'Touch Events'],
+                liveUrl: 'https://euro0707.github.io/app100/app/005-orekuna-quiz/',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app/005-orekuna-quiz',
+                completedDate: '2025-08-08',
+                features: ['Canvas描画機能', 'AI風判定演出', '褒めるフィードバック', 'モバイル対応'],
+                image: null,
+                status: 'completed'
             }
             // 他のアプリは順次追加
         ];
 
-        // 残り96個のプレースホルダー
-        for (let i = 5; i <= 100; i++) {
+        // 残り95個のプレースホルダー
+        for (let i = 6; i <= 100; i++) {
             this.apps.push({
                 id: String(i).padStart(3, '0'),
                 title: `アプリ #${i}`,
