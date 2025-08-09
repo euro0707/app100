@@ -8,7 +8,12 @@ class MathAdventure {
                 maxHp: 10,
                 coins: 0,
                 exp: 0,
-                expToNext: 10
+                expToNext: 10,
+                items: {
+                    healPotion: 0,
+                    luckCharm: 0,
+                    shieldRing: 0
+                }
             },
             currentEnemy: null,
             currentProblem: null,
@@ -25,6 +30,34 @@ class MathAdventure {
             { name: 'オーク', sprite: '👹', hp: 12, maxHp: 12, level: 3, coinReward: 5 },
             { name: 'ドラゴン', sprite: '🐉', hp: 20, maxHp: 20, level: 4, coinReward: 10 },
             { name: 'デーモン', sprite: '😈', hp: 30, maxHp: 30, level: 5, coinReward: 15 }
+        ];
+
+        // ショップアイテム
+        this.shopItems = [
+            { 
+                id: 'healPotion', 
+                name: 'かいふくのくすり', 
+                sprite: '🧪', 
+                price: 5, 
+                description: 'HPを3回復する',
+                effect: 'heal'
+            },
+            { 
+                id: 'luckCharm', 
+                name: 'ラッキーおまもり', 
+                sprite: '🍀', 
+                price: 8, 
+                description: '次の戦闘で経験値2倍',
+                effect: 'luck'
+            },
+            { 
+                id: 'shieldRing', 
+                name: 'まもりのゆびわ', 
+                sprite: '🛡️', 
+                price: 12, 
+                description: '次のダメージを1回防ぐ',
+                effect: 'shield'
+            }
         ];
 
         // DOM要素
@@ -45,14 +78,17 @@ class MathAdventure {
         this.elements.gameScreen = document.getElementById('gameScreen');
         this.elements.levelUpScreen = document.getElementById('levelUpScreen');
         this.elements.settingsScreen = document.getElementById('settingsScreen');
+        this.elements.shopScreen = document.getElementById('shopScreen');
 
         // ボタン要素
         this.elements.newGameBtn = document.getElementById('newGameBtn');
         this.elements.continueBtn = document.getElementById('continueBtn');
         this.elements.settingsBtn = document.getElementById('settingsBtn');
+        this.elements.shopBtn = document.getElementById('shopBtn');
         this.elements.homeBtn = document.getElementById('homeBtn');
         this.elements.levelUpContinueBtn = document.getElementById('levelUpContinueBtn');
         this.elements.closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        this.elements.closeShopBtn = document.getElementById('closeShopBtn');
         this.elements.resetGameBtn = document.getElementById('resetGameBtn');
 
         // ゲーム情報要素
@@ -87,6 +123,11 @@ class MathAdventure {
         this.elements.newLevel = document.getElementById('newLevel');
         this.elements.hpIncrease = document.getElementById('hpIncrease');
         this.elements.coinBonus = document.getElementById('coinBonus');
+
+        // ショップ要素
+        this.elements.shopPlayerCoins = document.getElementById('shopPlayerCoins');
+        this.elements.shopItemsContainer = document.getElementById('shopItemsContainer');
+        this.elements.inventoryContainer = document.getElementById('inventoryContainer');
     }
 
     setupEventListeners() {
@@ -97,6 +138,7 @@ class MathAdventure {
         // ゲーム画面
         this.elements.homeBtn.addEventListener('click', () => this.showStartScreen());
         this.elements.settingsBtn.addEventListener('click', () => this.showSettingsScreen());
+        this.elements.shopBtn.addEventListener('click', () => this.showShopScreen());
 
         // レベルアップ画面
         this.elements.levelUpContinueBtn.addEventListener('click', () => this.continueAfterLevelUp());
@@ -106,6 +148,9 @@ class MathAdventure {
         this.elements.resetGameBtn.addEventListener('click', () => this.resetGame());
         this.elements.soundToggle.addEventListener('change', () => this.updateSettings());
         this.elements.difficultySelect.addEventListener('change', () => this.updateSettings());
+
+        // ショップ画面
+        this.elements.closeShopBtn.addEventListener('click', () => this.closeShop());
     }
 
     // ゲームデータの保存・読み込み
@@ -154,6 +199,11 @@ class MathAdventure {
         this.showScreen(this.elements.settingsScreen);
     }
 
+    showShopScreen() {
+        this.showScreen(this.elements.shopScreen);
+        this.renderShop();
+    }
+
     // ゲーム開始・継続
     startNewGame() {
         this.gameState.player = {
@@ -162,7 +212,12 @@ class MathAdventure {
             maxHp: 10,
             coins: 0,
             exp: 0,
-            expToNext: 10
+            expToNext: 10,
+            items: {
+                healPotion: 0,
+                luckCharm: 0,
+                shieldRing: 0
+            }
         };
         this.spawnNewEnemy();
         this.showGameScreen();
@@ -343,7 +398,12 @@ class MathAdventure {
         this.showDamageEffect(damage);
         
         // 経験値獲得（コインは敵を倒した時のみ）
-        this.gameState.player.exp += 1;
+        let expGain = 1;
+        if (this.gameState.luckActive) {
+            expGain *= 2;
+            this.gameState.luckActive = false; // 一回使用で効果切れ
+        }
+        this.gameState.player.exp += expGain;
         
         // UI更新（敵のHPを0表示するため）
         this.updatePlayerUI();
@@ -364,10 +424,15 @@ class MathAdventure {
 
     handleIncorrectAnswer() {
         // プレイヤーがダメージを受ける
-        const damage = 1;
-        this.gameState.player.hp = Math.max(0, this.gameState.player.hp - damage);
+        if (this.gameState.shieldActive) {
+            this.gameState.shieldActive = false; // シールド消費
+            this.updateMessage('不正解...でもまもりのゆびわが守ってくれた！');
+        } else {
+            const damage = 1;
+            this.gameState.player.hp = Math.max(0, this.gameState.player.hp - damage);
+            this.updateMessage('不正解...敵の攻撃を受けた！');
+        }
         
-        this.updateMessage('不正解...敵の攻撃を受けた！');
         this.updatePlayerUI();
         
         if (this.gameState.player.hp <= 0) {
@@ -489,9 +554,99 @@ class MathAdventure {
             location.reload();
         }
     }
+
+    // ショップ機能
+    closeShop() {
+        this.showGameScreen();
+    }
+
+    renderShop() {
+        // コイン表示更新
+        this.elements.shopPlayerCoins.textContent = this.gameState.player.coins;
+
+        // ショップアイテム表示
+        this.elements.shopItemsContainer.innerHTML = this.shopItems.map(item => `
+            <div class="shop-item">
+                <div class="shop-item-icon">${item.sprite}</div>
+                <div class="shop-item-info">
+                    <div class="shop-item-name">${item.name}</div>
+                    <div class="shop-item-description">${item.description}</div>
+                    <div class="shop-item-price">💰 ${item.price}</div>
+                </div>
+                <button onclick="window.game.buyItem('${item.id}')" ${this.gameState.player.coins < item.price ? 'disabled' : ''}>
+                    ${this.gameState.player.coins >= item.price ? '購入' : 'お金が足りない'}
+                </button>
+            </div>
+        `).join('');
+
+        // インベントリ表示
+        const inventoryItems = Object.entries(this.gameState.player.items)
+            .filter(([id, count]) => count > 0)
+            .map(([id, count]) => {
+                const item = this.shopItems.find(shop => shop.id === id);
+                return `
+                    <div class="inventory-item">
+                        <div class="inventory-item-icon">${item.sprite}</div>
+                        <div class="inventory-item-name">${item.name}</div>
+                        <div class="inventory-item-count">×${count}</div>
+                        <button class="use-item-btn" onclick="window.game.useItem('${id}')">使う</button>
+                    </div>
+                `;
+            });
+
+        this.elements.inventoryContainer.innerHTML = inventoryItems.length > 0 
+            ? inventoryItems.join('') 
+            : '<p style="text-align: center; color: #7f8c8d;">アイテムを持っていません</p>';
+    }
+
+    buyItem(itemId) {
+        const item = this.shopItems.find(shop => shop.id === itemId);
+        if (!item) return;
+
+        if (this.gameState.player.coins >= item.price) {
+            this.gameState.player.coins -= item.price;
+            this.gameState.player.items[itemId]++;
+            this.saveGameData();
+            this.renderShop();
+            this.updatePlayerUI();
+            
+            // 購入成功エフェクト
+            this.updateMessage(`${item.name}を購入しました！`);
+        }
+    }
+
+    useItem(itemId) {
+        if (this.gameState.player.items[itemId] <= 0) return;
+
+        const item = this.shopItems.find(shop => shop.id === itemId);
+        if (!item) return;
+
+        this.gameState.player.items[itemId]--;
+        
+        // アイテム効果適用
+        switch (item.effect) {
+            case 'heal':
+                const healAmount = Math.min(3, this.gameState.player.maxHp - this.gameState.player.hp);
+                this.gameState.player.hp += healAmount;
+                this.updateMessage(`${item.name}を使った！HP+${healAmount}回復！`);
+                break;
+            case 'luck':
+                this.gameState.luckActive = true;
+                this.updateMessage(`${item.name}を使った！次の戦闘で経験値2倍！`);
+                break;
+            case 'shield':
+                this.gameState.shieldActive = true;
+                this.updateMessage(`${item.name}を使った！次のダメージを防ぐ！`);
+                break;
+        }
+
+        this.saveGameData();
+        this.renderShop();
+        this.updatePlayerUI();
+    }
 }
 
 // ゲーム開始
 document.addEventListener('DOMContentLoaded', () => {
-    new MathAdventure();
+    window.game = new MathAdventure();
 });

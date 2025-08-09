@@ -61,6 +61,7 @@
                     </div>
                 </div>
                 <div class="game-controls">
+                    <button id="shopBtn" class="btn btn-icon">🛒</button>
                     <button id="settingsBtn" class="btn btn-icon">⚙️</button>
                     <button id="homeBtn" class="btn btn-icon">🏠</button>
                 </div>
@@ -148,6 +149,30 @@
                 </div>
                 <div class="setting-item">
                     <button id="resetGameBtn" class="btn btn-warning">🔄 ゲームをリセット</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ショップ画面 -->
+    <div id="shopScreen" class="screen">
+        <div class="shop-container">
+            <div class="shop-header">
+                <h2>🛒 ドウグやさん</h2>
+                <button id="closeShopBtn" class="btn btn-icon">✕</button>
+            </div>
+            <div class="shop-content">
+                <div class="coins-display">
+                    <span>💰 所持コイン: <span id="shopPlayerCoins">0</span></span>
+                </div>
+                <div class="shop-items" id="shopItemsContainer">
+                    <!-- アイテムは動的生成 -->
+                </div>
+                <div class="inventory-section">
+                    <h3>📦 もっているアイテム</h3>
+                    <div class="inventory-items" id="inventoryContainer">
+                        <!-- インベントリは動的生成 -->
+                    </div>
                 </div>
             </div>
         </div>

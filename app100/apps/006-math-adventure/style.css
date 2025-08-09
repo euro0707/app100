@@ -578,3 +578,175 @@ body::before {
         font-size: 1.8rem;
     }
 }
+
+/* ショップ画面 */
+.shop-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid #ddd;
+}
+
+.shop-header {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+}
+
+.shop-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.shop-content {
+    padding: 20px;
+}
+
+.coins-display {
+    background: linear-gradient(45deg, #ffd700, #ffed4e);
+    color: #2c3e50;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border: 2px solid #f39c12;
+}
+
+.shop-items {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.shop-item {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid #26de81;
+    transition: transform 0.2s ease;
+}
+
+.shop-item:hover {
+    transform: translateY(-2px);
+}
+
+.shop-item-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.shop-item-info {
+    flex: 1;
+}
+
+.shop-item-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.shop-item-description {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 8px;
+}
+
+.shop-item-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #f39c12;
+}
+
+.shop-item button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(45deg, #74b9ff, #0984e3);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.shop-item button:hover {
+    transform: scale(1.05);
+}
+
+.shop-item button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.inventory-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.inventory-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.inventory-item {
+    background: rgba(52, 152, 219, 0.1);
+    border: 2px solid rgba(52, 152, 219, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.inventory-item:hover {
+    transform: scale(1.05);
+}
+
+.inventory-item-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.inventory-item-name {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.inventory-item-count {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.use-item-btn {
+    margin-top: 5px;
+    padding: 4px 8px;
+    background: linear-gradient(45deg, #00b894, #00a085);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
