@@ -82,12 +82,25 @@ class Portfolio {
                 features: ['Canvas描画機能', 'AI風判定演出', '褒めるフィードバック', 'モバイル対応'],
                 image: null,
                 status: 'completed'
+            },
+            {
+                id: '006',
+                title: 'さんすうアドベンチャー',
+                description: '小学校低学年向けRPG風計算ゲーム。足し算・引き算・かけ算の問題を解いて敵を倒し、レベルアップして強くなろう！',
+                category: 'education',
+                technologies: ['HTML5', 'CSS3', 'JavaScript ES6+', 'LocalStorage', 'RPG Game Logic'],
+                liveUrl: 'https://euro0707.github.io/app100/apps/006-math-adventure/',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app100/apps/006-math-adventure',
+                completedDate: '2025-08-09',
+                features: ['RPG風バトル', '段階的問題難易度', 'プレイヤー進行システム', 'セーブ機能'],
+                image: null,
+                status: 'completed'
             }
             // 他のアプリは順次追加
         ];
 
-        // 残り95個のプレースホルダー
-        for (let i = 6; i <= 100; i++) {
+        // 残り94個のプレースホルダー
+        for (let i = 7; i <= 100; i++) {
             this.apps.push({
                 id: String(i).padStart(3, '0'),
                 title: `アプリ #${i}`,
