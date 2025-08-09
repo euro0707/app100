@@ -342,9 +342,8 @@ class MathAdventure {
         // エフェクト表示
         this.showDamageEffect(damage);
         
-        // 経験値とコイン獲得
-        this.gameState.player.exp += 2;
-        this.gameState.player.coins += 1;
+        // 経験値獲得（コインは敵を倒した時のみ）
+        this.gameState.player.exp += 1;
         
         // UI更新（敵のHPを0表示するため）
         this.updatePlayerUI();
@@ -358,7 +357,7 @@ class MathAdventure {
             setTimeout(() => this.handleEnemyDefeated(), 1000);
         } else {
             // 次の問題へ
-            this.updateMessage('正解！敵にダメージを与えた！');
+            this.updateMessage('正解！敵にダメージを与えた！経験値+1');
             setTimeout(() => this.generateNewProblem(), 1500);
         }
     }
