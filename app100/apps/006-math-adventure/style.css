@@ -266,6 +266,28 @@ body::before {
     }
 }
 
+.enemy-sprite.defeated {
+    animation: defeatFade 1s ease-out forwards;
+}
+
+@keyframes defeatFade {
+    0% { 
+        transform: scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 0.5;
+        filter: drop-shadow(0 4px 8px rgba(255, 0, 0, 0.5));
+    }
+    100% { 
+        transform: scale(0.8);
+        opacity: 0.3;
+        filter: grayscale(100%) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+}
+
 .enemy-info {
     width: 100%;
 }

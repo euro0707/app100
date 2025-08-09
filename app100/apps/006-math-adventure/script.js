@@ -346,14 +346,19 @@ class MathAdventure {
         this.gameState.player.exp += 2;
         this.gameState.player.coins += 1;
         
+        // UI更新（敵のHPを0表示するため）
+        this.updatePlayerUI();
+        this.updateEnemyUI();
+        
         if (this.gameState.currentEnemy.hp <= 0) {
-            // 敵を倒した
-            this.handleEnemyDefeated();
+            // 敵を倒した - HP0の状態を表示してから処理
+            this.updateMessage('正解！敵を倒した！');
+            // 敗北アニメーション追加
+            this.elements.enemySprite.classList.add('defeated');
+            setTimeout(() => this.handleEnemyDefeated(), 1000);
         } else {
             // 次の問題へ
             this.updateMessage('正解！敵にダメージを与えた！');
-            this.updatePlayerUI();
-            this.updateEnemyUI();
             setTimeout(() => this.generateNewProblem(), 1500);
         }
     }
@@ -442,6 +447,11 @@ class MathAdventure {
         this.elements.enemyName.textContent = enemy.name;
         this.elements.enemyHp.textContent = enemy.hp;
         this.elements.enemyMaxHp.textContent = enemy.maxHp;
+        
+        // 新しい敵の場合はdefeatアニメーションをリセット
+        if (enemy.hp === enemy.maxHp) {
+            this.elements.enemySprite.classList.remove('defeated');
+        }
         
         const hpPercent = (enemy.hp / enemy.maxHp) * 100;
         this.elements.enemyHpBar.style.width = hpPercent + '%';
