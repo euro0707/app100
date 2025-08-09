@@ -1,0 +1,663 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+    color: #e0e0e0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+    padding: 20px;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===============================
+   オープニング画面
+   =============================== */
+#openingScreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+}
+
+.opening-content {
+    max-width: 800px;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.title-animation {
+    margin-bottom: 40px;
+}
+
+.main-title {
+    font-size: 4em;
+    background: linear-gradient(45deg, #ffd700, #ff6b35, #ffd700);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 1.5em;
+    color: #a0a0ff;
+    animation: pulse 2s infinite;
+}
+
+.story-intro {
+    background: rgba(160, 160, 255, 0.1);
+    border: 2px solid #a0a0ff;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 40px 0;
+    position: relative;
+}
+
+.sage-character {
+    font-size: 4em;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.speech-bubble p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #a0a0ff;
+    font-style: italic;
+}
+
+.character-setup {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.character-setup h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #00ffff;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #333;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.start-button {
+    background: linear-gradient(45deg, #ff6b35, #ffd700);
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #000;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+    margin-top: 30px;
+}
+
+.start-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+}
+
+/* ===============================
+   メインハブ画面
+   =============================== */
+#mainHub {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+}
+
+.hub-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.hub-header h1 {
+    font-size: 2.5em;
+    background: linear-gradient(45deg, #ffd700, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    /* Firefox fallback */
+    @supports not (-webkit-background-clip: text) {
+        color: #ffd700;
+    }
+    margin-bottom: 15px;
+}
+
+.adventurer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#adventurerDisplay {
+    color: #00ffff;
+    font-size: 1.2em;
+}
+
+.progress-summary {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.quest-map {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.map-background {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    align-items: center;
+}
+
+.day-node {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #333;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.day-node:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.day-node.available {
+    border-color: #00ffff;
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.day-node.completed {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.day-node.current {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.day-circle {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #666;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.day-number {
+    font-size: 2em;
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.day-status {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 1.5em;
+}
+
+.day-info h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.day-info p {
+    color: #a0a0a0;
+    margin-bottom: 10px;
+}
+
+.skills {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    color: #00ffff;
+    font-size: 0.9em;
+}
+
+.quest-path {
+    display: none; /* 簡略化のため非表示 */
+}
+
+.action-panel {
+    text-align: center;
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.primary-button,
+.secondary-button {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+}
+
+.primary-button {
+    background: linear-gradient(45deg, #ff6b35, #ffd700);
+    color: #000;
+}
+
+.primary-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+}
+
+.secondary-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    border: 2px solid #666;
+}
+
+.secondary-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #999;
+}
+
+.motivational-panel {
+    max-width: 800px;
+    margin: 40px auto;
+    background: rgba(160, 160, 255, 0.1);
+    border: 2px solid #a0a0ff;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sage-avatar {
+    font-size: 3em;
+    animation: float 3s ease-in-out infinite;
+}
+
+.sage-wisdom {
+    flex: 1;
+    font-size: 1.1em;
+    color: #a0a0ff;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* ===============================
+   エンディング画面
+   =============================== */
+#endingScreen {
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+    overflow-y: auto;
+}
+
+.ending-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.celebration {
+    margin-bottom: 40px;
+}
+
+.celebration h1 {
+    font-size: 3em;
+    background: linear-gradient(45deg, #ffd700, #ff6b35, #00ff00);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+
+.fireworks {
+    font-size: 2em;
+    animation: bounce 1s infinite;
+}
+
+.certificate-container {
+    margin: 40px 0;
+}
+
+.certificate {
+    background: linear-gradient(135deg, #fff, #f0f0f0);
+    color: #333;
+    border: 5px solid #ffd700;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.certificate-header {
+    border-bottom: 3px solid #ffd700;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+}
+
+.certificate-header h2 {
+    color: #1a1a2e;
+    font-size: 2.5em;
+}
+
+.certificate-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+}
+
+.certificate-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.certificate-name,
+.certificate-date {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #1a1a2e;
+    margin: 10px 0;
+}
+
+.skills-acquired {
+    margin: 30px 0;
+    text-align: left;
+}
+
+.skills-acquired h3 {
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.skill-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+.skill-item {
+    color: #333;
+    padding: 5px 0;
+}
+
+.certificate-footer {
+    border-top: 2px solid #ffd700;
+    margin-top: 30px;
+    padding-top: 20px;
+    color: #666;
+}
+
+.next-steps {
+    margin: 40px 0;
+    text-align: left;
+}
+
+.next-steps h3 {
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+.path-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.path-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #333;
+    border-radius: 15px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.path-card h4 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.path-card ul {
+    list-style: none;
+}
+
+.path-card li {
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.path-card li:before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: #ffd700;
+}
+
+.final-message {
+    margin: 40px 0;
+    background: rgba(160, 160, 255, 0.1);
+    border: 2px solid #a0a0ff;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.sage-final {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    text-align: left;
+}
+
+.final-wisdom {
+    flex: 1;
+    font-size: 1.1em;
+    color: #a0a0ff;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.ending-actions {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ===============================
+   アニメーション
+   =============================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+    to { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.3); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+/* ===============================
+   レスポンシブ対応
+   =============================== */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5em;
+    }
+    
+    .subtitle {
+        font-size: 1.2em;
+    }
+    
+    .hub-header h1 {
+        font-size: 2em;
+    }
+    
+    .adventurer-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .map-background {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-panel {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .motivational-panel,
+    .sage-final {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .path-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .ending-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .celebration h1 {
+        font-size: 2em;
+    }
+    
+    .certificate {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .certificate-header h2 {
+        font-size: 2em;
+    }
+}

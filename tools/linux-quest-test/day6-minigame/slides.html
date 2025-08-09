@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day6 事前学習 - パイプとリダイレクト</title>
+    <link rel="stylesheet" href="slides-style.css">
+</head>
+<body>
+    <div class="slides-container">
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1>🌊 データの流れを制する者</h1>
+                
+                <div class="message-block highlight">
+                    <h2>なぜパイプ技術が「データエンジニア必須スキル」なのか？</h2>
+                </div>
+
+                <div class="content-section">
+                    <h3>📊 データ処理のプロフェッショナル</h3>
+                    <ul>
+                        <li>大量データの高速処理→年収700-1000万円レベル</li>
+                        <li>リアルタイムデータパイプライン構築→年収800-1200万円レベル</li>
+                        <li>ビッグデータ処理アーキテクト→年収1000-1500万円レベル</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>💎 今日学ぶ価値</h3>
+                    <div class="command-intro">
+                        <p><strong>|, >, >>, grep = データ処理の基盤技術</strong></p>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <span class="command">| (パイプ)</span>
+                                <span class="description">→ コマンド間のデータ連携</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">> リダイレクト</span>
+                                <span class="description">→ 出力結果をファイルに保存</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">grep | sort</span>
+                                <span class="description">→ 検索結果を並び替え</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">cat | wc -l</span>
+                                <span class="description">→ ファイル行数の高速カウント</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 キャリアインパクト</h3>
+                    <p class="confidence-message">パイプ技術で「単発コマンドを使う人」から「データ処理を設計する人」へ<br>
+                    データエンジニア・ML エンジニアへの必須基盤</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>⚡ 実務で使うデータ処理パイプライン</h1>
+
+                <div class="scene-section">
+                    <h2>🔄 データ処理の現場例</h2>
+                    
+                    <div class="command-usage">
+                        <h3>1. ログ解析パイプライン</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>cat access.log | grep "ERROR" | wc -l</code>
+                                <span>→ エラー件数の高速集計</span>
+                            </div>
+                            <div class="example">
+                                <code>tail -f app.log | grep "CRITICAL"</code>
+                                <span>→ 重要エラーのリアルタイム監視</span>
+                            </div>
+                            <div class="example">
+                                <code>cat *.log | sort | uniq -c > summary.txt</code>
+                                <span>→ 全ログの重複除去・集計・保存</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>2. データ分析処理</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>ps aux | grep python | awk '{print $2}'</code>
+                                <span>→ Pythonプロセス一覧の抽出</span>
+                            </div>
+                            <div class="example">
+                                <code>ls -l | grep "^d" | wc -l</code>
+                                <span>→ ディレクトリ数の高速カウント</span>
+                            </div>
+                            <div class="example">
+                                <code>find . -name "*.py" | xargs wc -l</code>
+                                <span>→ 全Pythonファイルの行数集計</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>3. 自動化レポート生成</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>date > report.txt && ps aux >> report.txt</code>
+                                <span>→ 日時付きシステムレポート生成</span>
+                            </div>
+                            <div class="example">
+                                <code>df -h | grep -v "tmpfs" | sort</code>
+                                <span>→ ディスク使用量の整理表示</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>🎯 今日の習得目標</h3>
+                    <p class="goal-message">プロレベルのデータ処理パイプライン技術をマスター</p>
+                    <p class="preview">明日は総合演習で全技術を統合</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>🎮 パイプライン構築ミニゲーム</h1>
+
+                <div class="experience-section">
+                    <h2>これから体験すること</h2>
+                    <p class="sub-title">実際のデータ処理パイプラインを構築：</p>
+                    <ul class="experience-list">
+                        <li>パイプを使った複数コマンドの連携</li>
+                        <li>リダイレクトでの効率的なファイル出力</li>
+                        <li>grep・sort・uniqを組み合わせた高度な処理</li>
+                        <li>実用的なデータ分析パイプラインの完成</li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h2>🧙‍♂️ データ処理学習サポート</h2>
+                    <div class="support-features">
+                        <div class="support-item">
+                            <h3>段階的パイプライン学習</h3>
+                            <ul>
+                                <li>基本的なパイプ操作から応用まで</li>
+                                <li>実用的なデータ処理パターン</li>
+                                <li>効率的なコマンド組み合わせ技術</li>
+                                <li>エラー処理とデバッグ方法</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h2>🎯 今日のゴール</h2>
+                    <div class="goal-quotes">
+                        <p class="quote">「複雑なデータ処理が一行でできる！」</p>
+                        <p class="quote">「プロのデータ処理技術を体得した！」</p>
+                    </div>
+                    <p class="goal-description">データエンジニアの基盤スキル習得</p>
+                </div>
+
+                <div class="start-section">
+                    <button class="start-minigame-btn" onclick="startMinigame()">
+                        🌊 パイプライン構築を始める
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-navigation">
+            <button class="nav-btn prev-btn" onclick="previousSlide()" id="prevBtn">← 前へ</button>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">次へ →</button>
+        </div>
+    </div>
+
+    <script src="slides-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest - 稼げる武器を手に入れる7日間の冒険</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- オープニング画面 -->
+        <div id="openingScreen" class="screen active">
+            <div class="opening-content">
+                <div class="title-animation">
+                    <h1 class="main-title">🗡️ Linux Quest</h1>
+                    <p class="subtitle">稼げる武器を手に入れる7日間の冒険</p>
+                </div>
+                
+                <div class="story-intro">
+                    <div class="sage-character">🧙‍♂️</div>
+                    <div class="speech-bubble">
+                        <p>「勇者よ、過去にHTMLで挫折したかもしれない。だが今こそ、真の力を手に入れる時だ。」</p>
+                        <p>「Linuxという古き良き魔法の言葉を学べば、コンピューターの心に直接語りかけることができる。」</p>
+                        <p>「この7日間の旅路を共に歩もう。」</p>
+                    </div>
+                </div>
+                
+                <div class="character-setup">
+                    <h3>🎯 冒険者の情報</h3>
+                    <div class="form-group">
+                        <label for="adventurerName">冒険者名:</label>
+                        <input type="text" id="adventurerName" placeholder="あなたの名前を入力してください">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">プログラミング経験:</label>
+                        <select id="experience">
+                            <option value="beginner">初心者（HTMLで挫折経験あり）</option>
+                            <option value="some">少し経験あり</option>
+                            <option value="intermediate">中級者</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="goal">学習目標:</label>
+                        <select id="goal">
+                            <option value="career">転職・キャリアアップ</option>
+                            <option value="skills">新しいスキル習得</option>
+                            <option value="automation">作業自動化</option>
+                            <option value="understanding">技術理解を深める</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="start-button" onclick="startAdventure()">
+                    🚀 冒険を始める
+                </button>
+            </div>
+        </div>
+
+        <!-- メインハブ画面 -->
+        <div id="mainHub" class="screen">
+            <header class="hub-header">
+                <h1>🗡️ Linux Quest - 冒険の記録</h1>
+                <div class="adventurer-info">
+                    <span id="adventurerDisplay">冒険者: </span>
+                    <div class="progress-summary">
+                        <span id="overallProgress">進捗: 0/7 完了</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="quest-map">
+                <div class="map-background">
+                    <div class="day-node" id="day1" data-day="1">
+                        <div class="day-circle">
+                            <span class="day-number">1</span>
+                            <div class="day-status" id="status1">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>新たな旅路の始まり</h3>
+                            <p>ターミナル基本操作</p>
+                            <div class="skills">echo, pwd, ls</div>
+                        </div>
+                    </div>
+
+                    <div class="quest-path" id="path1-2"></div>
+
+                    <div class="day-node" id="day2" data-day="2">
+                        <div class="day-circle">
+                            <span class="day-number">2</span>
+                            <div class="day-status" id="status2">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>デジタル世界の探検術</h3>
+                            <p>ディレクトリ・ファイル操作</p>
+                            <div class="skills">mkdir, cd, touch, cat</div>
+                        </div>
+                    </div>
+
+                    <div class="quest-path" id="path2-3"></div>
+
+                    <div class="day-node" id="day3" data-day="3">
+                        <div class="day-circle">
+                            <span class="day-number">3</span>
+                            <div class="day-status" id="status3">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>古き書物の解読術</h3>
+                            <p>ファイル閲覧・編集</p>
+                            <div class="skills">less, head, tail, nano, grep</div>
+                        </div>
+                    </div>
+
+                    <div class="quest-path" id="path3-4"></div>
+
+                    <div class="day-node" id="day4" data-day="4">
+                        <div class="day-circle">
+                            <span class="day-number">4</span>
+                            <div class="day-status" id="status4">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>守護の印章</h3>
+                            <p>パーミッション管理</p>
+                            <div class="skills">chmod, ls -l, 権限数字</div>
+                        </div>
+                    </div>
+
+                    <div class="quest-path" id="path4-5"></div>
+
+                    <div class="day-node" id="day5" data-day="5">
+                        <div class="day-circle">
+                            <span class="day-number">5</span>
+                            <div class="day-status" id="status5">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>魔法の巻物</h3>
+                            <p>シェルスクリプト作成</p>
+                            <div class="skills">変数, 条件分岐, 繰り返し, 関数</div>
+                        </div>
+                    </div>
+
+                    <div class="quest-path" id="path5-6"></div>
+
+                    <div class="day-node" id="day6" data-day="6">
+                        <div class="day-circle">
+                            <span class="day-number">6</span>
+                            <div class="day-status" id="status6">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>情報の流れを制す</h3>
+                            <p>パイプ・リダイレクト</p>
+                            <div class="skills">|, >, >>, grep組み合わせ</div>
+                        </div>
+                    </div>
+
+                    <div class="quest-path" id="path6-7"></div>
+
+                    <div class="day-node" id="day7" data-day="7">
+                        <div class="day-circle">
+                            <span class="day-number">7</span>
+                            <div class="day-status" id="status7">🔒</div>
+                        </div>
+                        <div class="day-info">
+                            <h3>最終試練</h3>
+                            <p>総合システム管理ツール</p>
+                            <div class="skills">メニューシステム, カラー出力, ログ機能</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-panel">
+                <button id="resetProgress" class="secondary-button">🔄 進捗リセット</button>
+                <button id="viewCertificate" class="primary-button" style="display: none;">🎓 修了証を見る</button>
+                <button id="continueButton" class="primary-button" onclick="continueToNextDay()">📖 続きから始める</button>
+            </div>
+
+            <div class="motivational-panel">
+                <div class="sage-avatar">🧙‍♂️</div>
+                <div class="sage-wisdom" id="sageWisdom">
+                    「冒険者よ、君の前には7つの試練が待っている。一歩ずつ確実に進めば、必ず稼げる武器を手に入れることができる。」
+                </div>
+            </div>
+        </div>
+
+        <!-- エンディング画面 -->
+        <div id="endingScreen" class="screen">
+            <div class="ending-content">
+                <div class="celebration">
+                    <h1>🎉 Linux Quest 完全制覇！ 🎉</h1>
+                    <div class="fireworks">✨🎆✨</div>
+                </div>
+
+                <div class="certificate-container">
+                    <div class="certificate">
+                        <div class="certificate-header">
+                            <h2>🎓 修了証明書 🎓</h2>
+                        </div>
+                        <div class="certificate-body">
+                            <p class="certificate-title">Linux Quest - 7日間の冒険</p>
+                            <p class="certificate-text">
+                                これにより、下記の者が Linux Quest を完走し、<br>
+                                Linux コマンドライン操作の基礎技能を習得したことを証明します。
+                            </p>
+                            <p class="certificate-name">修了者: <span id="certificateName"></span></p>
+                            <p class="certificate-date">修了日: <span id="certificateDate"></span></p>
+                            
+                            <div class="skills-acquired">
+                                <h3>習得スキル:</h3>
+                                <div class="skill-list">
+                                    <div class="skill-item">✅ ターミナル操作の基本</div>
+                                    <div class="skill-item">✅ ディレクトリとファイル操作</div>
+                                    <div class="skill-item">✅ ファイル閲覧・編集技術</div>
+                                    <div class="skill-item">✅ パーミッション管理</div>
+                                    <div class="skill-item">✅ シェルスクリプト作成</div>
+                                    <div class="skill-item">✅ パイプとリダイレクト</div>
+                                    <div class="skill-item">✅ システム管理ツール開発</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="certificate-footer">
+                            <p>発行者: Linux Quest 運営委員会</p>
+                            <p>認定: Claude AI Mentor</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>🚀 次のステップへ</h3>
+                    <div class="path-options">
+                        <div class="path-card">
+                            <h4>🔰 初級から中級へ</h4>
+                            <ul>
+                                <li>より高度なシェルスクリプト</li>
+                                <li>システム管理（systemd, cron）</li>
+                                <li>ネットワーク設定</li>
+                                <li>セキュリティ設定</li>
+                            </ul>
+                        </div>
+                        <div class="path-card">
+                            <h4>🚀 専門分野への発展</h4>
+                            <ul>
+                                <li>DevOps Engineering (Docker, Kubernetes)</li>
+                                <li>Site Reliability Engineering (SRE)</li>
+                                <li>Cloud Computing (AWS, GCP, Azure)</li>
+                                <li>Cybersecurity</li>
+                            </ul>
+                        </div>
+                        <div class="path-card">
+                            <h4>💼 キャリアへの活用</h4>
+                            <ul>
+                                <li>システム管理者</li>
+                                <li>インフラエンジニア</li>
+                                <li>DevOpsエンジニア</li>
+                                <li>データエンジニア</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="final-message">
+                    <div class="sage-final">
+                        <div class="sage-avatar">🧙‍♂️</div>
+                        <div class="final-wisdom">
+                            「見事だ！君は今日、『過去に挫折した者』から『未来を切り開く者』へと生まれ変わった。<br>
+                            AI時代の今だからこそ、このような本質的な技術が更に価値を持つ。<br>
+                            さあ、新たな冒険の扉が君の前に開かれている。勇気を持って、歩み続けよう。」
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ending-actions">
+                    <button onclick="shareAchievement()" class="primary-button">📱 成果をシェア</button>
+                    <button onclick="downloadCertificate()" class="secondary-button">💾 修了証をダウンロード</button>
+                    <button onclick="restartQuest()" class="secondary-button">🔄 もう一度冒険する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day4 事前学習 - パーミッション管理</title>
+    <link rel="stylesheet" href="slides-style.css">
+</head>
+<body>
+    <div class="slides-container">
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1>🛡️ セキュリティの守護者への道</h1>
+                
+                <div class="message-block highlight">
+                    <h2>なぜ権限管理が「最も重要な高収入スキル」なのか？</h2>
+                </div>
+
+                <div class="content-section">
+                    <h3>🔒 セキュリティエンジニアの価値</h3>
+                    <ul>
+                        <li>情報漏洩を防ぐ権限設計→年収800-1200万円レベル</li>
+                        <li>システムセキュリティ管理→年収700-1000万円レベル</li>
+                        <li>クラウドアクセス制御設計→年収900-1500万円レベル</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>💎 今日学ぶ価値</h3>
+                    <div class="command-intro">
+                        <p><strong>chmod, ls -l = セキュリティの基盤技術</strong></p>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <span class="command">ls -l</span>
+                                <span class="description">→ ファイル権限の詳細確認</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">chmod 755</span>
+                                <span class="description">→ 適切な権限設定</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">chmod +x</span>
+                                <span class="description">→ 実行権限の付与</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">chown</span>
+                                <span class="description">→ 所有者変更（管理者権限）</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 キャリアインパクト</h3>
+                    <p class="confidence-message">権限管理で「セキュリティ意識のない人」から「システムを守れる人」へ<br>
+                    情報セキュリティ・システム管理の根幹スキル</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>🔐 実務で使う権限管理術</h1>
+
+                <div class="scene-section">
+                    <h2>🏢 システム管理の現場</h2>
+                    
+                    <div class="command-usage">
+                        <h3>1. Webサーバーセキュリティ</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>chmod 644 *.html</code>
+                                <span>→ Webファイルの適切な権限設定</span>
+                            </div>
+                            <div class="example">
+                                <code>chmod 755 cgi-bin/</code>
+                                <span>→ 実行ディレクトリの権限設定</span>
+                            </div>
+                            <div class="example">
+                                <code>chmod 600 config/database.conf</code>
+                                <span>→ 機密設定ファイルの保護</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>2. 開発チームでの権限管理</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>ls -la</code>
+                                <span>→ 隠しファイル含む全権限確認</span>
+                            </div>
+                            <div class="example">
+                                <code>chmod +x deploy.sh</code>
+                                <span>→ デプロイスクリプトの実行権限付与</span>
+                            </div>
+                            <div class="example">
+                                <code>chown user:team project/</code>
+                                <span>→ プロジェクトフォルダの所有者変更</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>3. セキュリティベストプラクティス</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>find . -type f -perm 777</code>
+                                <span>→ 危険な権限のファイル検出</span>
+                            </div>
+                            <div class="example">
+                                <code>chmod -R 750 sensitive/</code>
+                                <span>→ 機密フォルダの再帰的権限設定</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>🎯 今日の習得目標</h3>
+                    <p class="goal-message">プロレベルのセキュリティ権限管理をマスター</p>
+                    <p class="preview">明日は自動化スクリプト作成を学ぶ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>🎮 権限管理ミニゲーム</h1>
+
+                <div class="experience-section">
+                    <h2>これから体験すること</h2>
+                    <p class="sub-title">実際のシステム管理と同じ権限操作：</p>
+                    <ul class="experience-list">
+                        <li>ls -l で権限の詳細表示を読み解く</li>
+                        <li>数字表記(755)と文字表記(rwx)の両方をマスター</li>
+                        <li>適切なセキュリティレベルで権限設定</li>
+                        <li>実行可能ファイルの作成と権限付与</li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h2>🧙‍♂️ セキュリティ学習サポート</h2>
+                    <div class="support-features">
+                        <div class="support-item">
+                            <h3>段階的権限管理学習</h3>
+                            <ul>
+                                <li>権限表記の詳細解説</li>
+                                <li>セキュリティリスクの実例紹介</li>
+                                <li>適切な権限設定の判断基準</li>
+                                <li>実務で使える権限管理パターン</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h2>🎯 今日のゴール</h2>
+                    <div class="goal-quotes">
+                        <p class="quote">「権限設定が完璧に理解できた！」</p>
+                        <p class="quote">「セキュリティを意識した管理ができる！」</p>
+                    </div>
+                    <p class="goal-description">情報セキュリティの基盤スキル習得</p>
+                </div>
+
+                <div class="start-section">
+                    <button class="start-minigame-btn" onclick="startMinigame()">
+                        🛡️ 権限管理を始める
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-navigation">
+            <button class="nav-btn prev-btn" onclick="previousSlide()" id="prevBtn">← 前へ</button>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">次へ →</button>
+        </div>
+    </div>
+
+    <script src="slides-script.js"></script>
+</body>
+</html>

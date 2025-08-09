@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day1 事前学習 - ターミナル基本操作</title>
+    <link rel="stylesheet" href="slides-style.css">
+</head>
+<body>
+    <div class="slides-container">
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1>🎯 黒い画面への第一歩</h1>
+                
+                <div class="message-block highlight">
+                    <h2>君だけじゃない。プログラマーの90%が最初に感じる恐怖</h2>
+                </div>
+
+                <div class="content-section">
+                    <h3>💭 共感</h3>
+                    <ul>
+                        <li>「黒い画面 = 難しそう」は自然な反応</li>
+                        <li>HTMLで挫折した経験も、実は多くの人が通る道</li>
+                        <li>でも実際は、たった3つのコマンドから始まる世界</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>💎 価値提示</h3>
+                    <div class="command-intro">
+                        <p><strong>echo, pwd, ls = Linuxの「あいうえお」</strong></p>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <span class="command">echo</span>
+                                <span class="description">→ コンピューターとの会話</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">pwd</span>
+                                <span class="description">→ 現在地の確認（迷子にならない）</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">ls</span>
+                                <span class="description">→ 周囲の状況把握</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🌟 安心感</h3>
+                    <p class="confidence-message">これができれば他のコマンドも必ず理解できる<br>
+                    今日で「恐怖」が「興味」に変わる</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>📋 3つのコマンドの実用シーン</h1>
+
+                <div class="scene-section">
+                    <h2>🏢 開発現場のリアル</h2>
+                    
+                    <div class="command-usage">
+                        <h3>1. echo の使い方</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>echo "Hello World"</code>
+                                <span>→ 動作確認</span>
+                            </div>
+                            <div class="example">
+                                <code>echo $PATH</code>
+                                <span>→ 環境設定確認</span>
+                            </div>
+                            <div class="example">
+                                <code>echo "処理完了" >> log.txt</code>
+                                <span>→ 記録残し</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>2. pwd の使い方</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>pwd</code>
+                                <span>→ 「今どこにいる？」の確認</span>
+                            </div>
+                            <div class="example-note">
+                                <p>• 作業ディレクトリの迷子防止</p>
+                                <p>• パスをコピペで他の人に場所を伝える</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>3. ls の使い方</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>ls</code>
+                                <span>→ 「ここに何がある？」</span>
+                            </div>
+                            <div class="example">
+                                <code>ls -l</code>
+                                <span>→ 詳細情報（サイズ、日付、権限）</span>
+                            </div>
+                            <div class="example">
+                                <code>ls *.txt</code>
+                                <span>→ 特定ファイルだけ表示</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>🎯 今日の学習目標</h3>
+                    <p class="goal-message">この3つで黒い画面が「怖い存在」から「便利な道具」に変わる</p>
+                    <p class="preview">明日はこれらを使ってファイル操作を覚える</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>🎮 ミニゲーム体験の流れ</h1>
+
+                <div class="experience-section">
+                    <h2>これから体験すること</h2>
+                    <p class="sub-title">本物のターミナル環境（安全な仮想環境）で：</p>
+                    <ul class="experience-list">
+                        <li>実際にコマンドを入力</li>
+                        <li>結果を確認して理解を深める</li>
+                        <li>段階的に成功体験を積み重ね</li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h2>🧙‍♂️ サポート体制</h2>
+                    <div class="support-features">
+                        <div class="support-item">
+                            <h3>賢者が常にガイド</h3>
+                            <ul>
+                                <li>ヒント機能で迷わない</li>
+                                <li>間違えても優しくサポート</li>
+                                <li>成功時には一緒に喜んでくれる</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h2>🎯 今日のゴール</h2>
+                    <div class="goal-quotes">
+                        <p class="quote">「黒い画面、案外いけるじゃん！」</p>
+                        <p class="quote">「明日が楽しみ！」</p>
+                    </div>
+                    <p class="goal-description">と思えるようになる</p>
+                </div>
+
+                <div class="start-section">
+                    <button class="start-minigame-btn" onclick="startMinigame()">
+                        🚀 ミニゲームを始める
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-navigation">
+            <button class="nav-btn prev-btn" onclick="previousSlide()" id="prevBtn">← 前へ</button>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">次へ →</button>
+        </div>
+    </div>
+
+    <script src="slides-script.js"></script>
+</body>
+</html>

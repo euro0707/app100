@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest Day6 - 情報の流れを制す</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="quest-header">
+            <h1>🌊 Linux Quest Day6: 情報の流れを制す</h1>
+            <p class="sage-message">賢者：「勇者よ、今日はデータの流れを操る技術を学ぼう」</p>
+        </header>
+
+        <div class="game-area">
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                    </div>
+                    <div class="terminal-title">Linux Quest Terminal - Day6</div>
+                </div>
+                
+                <div class="terminal" id="terminal">
+                    <div class="terminal-line">
+                        <span class="prompt">quest@linux:~$</span>
+                        <span class="welcome-text">Day6: パイプとリダイレクトでデータの流れを自在に操ろう！</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt" id="currentPrompt">quest@linux:~$</span>
+                    <input type="text" id="commandInput" placeholder="コマンドを入力してください" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="quest-progress">
+                <h3>🏆 今日のクエスト進行状況</h3>
+                <div class="progress-list">
+                    <div class="progress-item" id="task-basic-pipe">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">基本的なパイプ（|）を使用</span>
+                    </div>
+                    <div class="progress-item" id="task-redirect-output">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">出力リダイレクト（>）を使用</span>
+                    </div>
+                    <div class="progress-item" id="task-append-output">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">追記リダイレクト（>>）を使用</span>
+                    </div>
+                    <div class="progress-item" id="task-multiple-pipes">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">複数パイプを組み合わせ</span>
+                    </div>
+                    <div class="progress-item" id="task-grep-pipe">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">grep + パイプでフィルタリング</span>
+                    </div>
+                    <div class="progress-item" id="task-sort-uniq">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">sort + uniq でデータ整理</span>
+                    </div>
+                    <div class="progress-item" id="task-data-analysis">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">実用的なデータ解析を実行</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-flow-visualizer">
+            <h3>📊 データ流れの可視化</h3>
+            <div class="flow-container" id="flowContainer">
+                <div class="flow-step">
+                    <div class="flow-box">入力データ</div>
+                    <div class="flow-arrow">→</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-box">処理1</div>
+                    <div class="flow-arrow">→</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-box">処理2</div>
+                    <div class="flow-arrow">→</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-box">出力結果</div>
+                </div>
+            </div>
+            <div class="flow-legend">
+                <div class="legend-item">| = パイプ（データを次の処理に渡す）</div>
+                <div class="legend-item">> = リダイレクト（結果をファイルに保存）</div>
+                <div class="legend-item">>> = 追記リダイレクト（ファイルに追記）</div>
+            </div>
+        </div>
+
+        <div class="commands-reference">
+            <h3>🔧 コマンドリファレンス</h3>
+            <div class="ref-grid">
+                <div class="ref-card">
+                    <div class="ref-title">grep</div>
+                    <div class="ref-desc">パターンマッチング</div>
+                    <div class="ref-example">grep "word" file.txt</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">sort</div>
+                    <div class="ref-desc">データのソート</div>
+                    <div class="ref-example">sort file.txt</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">uniq</div>
+                    <div class="ref-desc">重複行の除去</div>
+                    <div class="ref-example">uniq -c sorted.txt</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">wc</div>
+                    <div class="ref-desc">行・単語・文字数カウント</div>
+                    <div class="ref-example">wc -l file.txt</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">cut</div>
+                    <div class="ref-desc">列の抽出</div>
+                    <div class="ref-example">cut -d',' -f1 csv.txt</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">head/tail</div>
+                    <div class="ref-desc">先頭・末尾の表示</div>
+                    <div class="ref-example">head -5 file.txt</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-panel">
+            <h3>💡 ヒント</h3>
+            <div id="hintText">
+                まずはサンプルデータを準備します。setup-dataコマンドでテストデータを作成しましょう。
+            </div>
+        </div>
+
+        <div class="sage-panel" id="sagePanel">
+            <div class="sage-avatar">🧙‍♂️</div>
+            <div class="sage-speech" id="sageMessage">
+                データの流れを制する者が、情報の世界を制する。今日は水流の如く美しい技術を学ぼう。
+            </div>
+        </div>
+
+        <!-- 固定ナビゲーションボタン -->
+        <div class="fixed-nav">
+            <button class="nav-button home-btn" onclick="confirmReturnHome()" title="メイン画面に戻る">
+                🏠 メイン画面に戻る
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

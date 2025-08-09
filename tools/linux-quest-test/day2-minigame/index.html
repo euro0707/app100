@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest Day2 - デジタル世界の探検術</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="quest-header">
+            <h1>🗡️ Linux Quest Day2: デジタル世界の探検術</h1>
+            <p class="sage-message">賢者：「勇者よ、今日は『歩く』方法を学ぼう。デジタル世界を自由に移動する術だ」</p>
+        </header>
+
+        <div class="game-area">
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                    </div>
+                    <div class="terminal-title">Linux Quest Terminal - Day2</div>
+                </div>
+                
+                <div class="terminal" id="terminal">
+                    <div class="terminal-line">
+                        <span class="prompt">quest@linux:~$</span>
+                        <span class="welcome-text">Day2: フォルダ間を自由に移動し、新しいファイルやフォルダを作成しよう！</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt" id="currentPrompt">quest@linux:~$</span>
+                    <input type="text" id="commandInput" placeholder="コマンドを入力してください" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="quest-progress">
+                <h3>🏆 今日のクエスト進行状況</h3>
+                <div class="progress-list">
+                    <div class="progress-item" id="task-ls-l">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">ls -l で詳細なファイル一覧を確認</span>
+                    </div>
+                    <div class="progress-item" id="task-mkdir">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">mkdir で新しいディレクトリを作成</span>
+                    </div>
+                    <div class="progress-item" id="task-cd">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">cd でディレクトリに移動</span>
+                    </div>
+                    <div class="progress-item" id="task-touch">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">touch で新しいファイルを作成</span>
+                    </div>
+                    <div class="progress-item" id="task-echo-redirect">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">echo と > でファイルに書き込み</span>
+                    </div>
+                    <div class="progress-item" id="task-cat">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">cat でファイルの内容を確認</span>
+                    </div>
+                    <div class="progress-item" id="task-append">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">>> でファイルに追記</span>
+                    </div>
+                    <div class="progress-item" id="task-cd-parent">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">cd .. で親ディレクトリに戻る</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filesystem-view">
+            <h3>📁 ファイルシステム構造</h3>
+            <div id="filesystemTree">
+                <div class="directory-item" data-path="/home/quest">
+                    <span class="folder-icon">📁</span> /home/quest
+                    <div class="subdirectory" id="homeContents">
+                        <div class="file-item">📄 sample.txt</div>
+                        <div class="file-item">📄 readme.md</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-panel">
+            <h3>💡 ヒント</h3>
+            <div id="hintText">
+                まずは「ls -l」コマンドで現在の場所にあるファイルを詳しく見てみましょう。
+            </div>
+        </div>
+
+        <div class="sage-panel" id="sagePanel">
+            <div class="sage-avatar">🧙‍♂️</div>
+            <div class="sage-speech" id="sageMessage">
+                まずは ls -l で現在地の詳しい情報を確認してみよう。そして新しい冒険拠点を作ってみよう。
+            </div>
+        </div>
+        
+        <!-- 固定ナビゲーションボタン -->
+        <div class="fixed-nav">
+            <button class="nav-button home-btn" onclick="confirmReturnHome()" title="メイン画面に戻る">
+                🏠 メイン画面に戻る
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

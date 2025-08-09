@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest Day7 - 最終試練</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="quest-header">
+            <h1>⚔️ Linux Quest Day7: 最終試練</h1>
+            <p class="sage-message">賢者：「勇者よ、ついに最終試練の時が来た。全ての技術を統合せよ」</p>
+        </header>
+
+        <div class="game-area">
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                    </div>
+                    <div class="terminal-title">Linux Quest Terminal - Final Challenge</div>
+                </div>
+                
+                <div class="terminal" id="terminal">
+                    <div class="terminal-line">
+                        <span class="prompt">quest@linux:~$</span>
+                        <span class="welcome-text">Day7: 最終試練 - 総合システム管理ツールを作成しよう！</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt" id="currentPrompt">quest@linux:~$</span>
+                    <input type="text" id="commandInput" placeholder="コマンドを入力してください" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="quest-progress">
+                <h3>🏆 最終試練 進行状況</h3>
+                <div class="progress-list">
+                    <div class="progress-item" id="task-create-admin-tool">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">システム管理ツールを作成</span>
+                    </div>
+                    <div class="progress-item" id="task-system-info">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">システム情報表示機能</span>
+                    </div>
+                    <div class="progress-item" id="task-process-monitor">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">プロセス監視機能</span>
+                    </div>
+                    <div class="progress-item" id="task-log-analysis">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">ログ解析機能</span>
+                    </div>
+                    <div class="progress-item" id="task-backup-system">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">バックアップシステム</span>
+                    </div>
+                    <div class="progress-item" id="task-file-management">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">ファイル管理機能</span>
+                    </div>
+                    <div class="progress-item" id="task-menu-system">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">メニューシステム</span>
+                    </div>
+                    <div class="progress-item" id="task-graduation">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">Linux Quest 修了！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-tool-interface" id="adminToolInterface" style="display: none;">
+            <div class="admin-header">
+                <div class="admin-title">🛠️ Linux Quest システム管理ツール</div>
+                <div class="admin-controls">
+                    <button id="minimizeAdmin">📱 最小化</button>
+                    <button id="closeAdmin">❌ 閉じる</button>
+                </div>
+            </div>
+            <div class="admin-content">
+                <div class="admin-menu">
+                    <button class="admin-menu-btn" data-function="system-info">📊 システム情報</button>
+                    <button class="admin-menu-btn" data-function="process-monitor">⚡ プロセス監視</button>
+                    <button class="admin-menu-btn" data-function="log-analysis">📋 ログ解析</button>
+                    <button class="admin-menu-btn" data-function="backup">💾 バックアップ</button>
+                    <button class="admin-menu-btn" data-function="file-manager">📁 ファイル管理</button>
+                    <button class="admin-menu-btn" data-function="cleanup">🧹 システムクリーンアップ</button>
+                </div>
+                <div class="admin-display" id="adminDisplay">
+                    <div class="admin-welcome">
+                        <h3>Linux Quest システム管理ツール</h3>
+                        <p>左のメニューから機能を選択してください。</p>
+                        <div class="system-status">
+                            <div class="status-item">
+                                <span class="status-label">システム状態:</span>
+                                <span class="status-value online">オンライン</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">稼働時間:</span>
+                                <span class="status-value" id="uptime">00:00:00</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">管理者:</span>
+                                <span class="status-value">quest_master</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-mastered">
+            <h3>🎓 習得した技術</h3>
+            <div class="skills-grid">
+                <div class="skill-card" data-day="1">
+                    <div class="skill-icon">🖥️</div>
+                    <div class="skill-title">Day1: ターミナル基礎</div>
+                    <div class="skill-desc">echo, pwd, ls</div>
+                </div>
+                <div class="skill-card" data-day="2">
+                    <div class="skill-icon">📁</div>
+                    <div class="skill-title">Day2: ファイル操作</div>
+                    <div class="skill-desc">cd, mkdir, cp, mv</div>
+                </div>
+                <div class="skill-card" data-day="3">
+                    <div class="skill-icon">📖</div>
+                    <div class="skill-title">Day3: ファイル閲覧</div>
+                    <div class="skill-desc">cat, less, head, tail, nano</div>
+                </div>
+                <div class="skill-card" data-day="4">
+                    <div class="skill-icon">🛡️</div>
+                    <div class="skill-title">Day4: 権限管理</div>
+                    <div class="skill-desc">chmod, ls -l, 権限システム</div>
+                </div>
+                <div class="skill-card" data-day="5">
+                    <div class="skill-icon">📜</div>
+                    <div class="skill-title">Day5: スクリプト</div>
+                    <div class="skill-desc">変数, 条件分岐, ループ, 関数</div>
+                </div>
+                <div class="skill-card" data-day="6">
+                    <div class="skill-icon">🌊</div>
+                    <div class="skill-title">Day6: データの流れ</div>
+                    <div class="skill-desc">パイプ, リダイレクト, データ処理</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-panel">
+            <h3>💡 ヒント</h3>
+            <div id="hintText">
+                create-admin-toolコマンドで統合システム管理ツールの作成を開始しましょう。
+            </div>
+        </div>
+
+        <div class="sage-panel" id="sagePanel">
+            <div class="sage-avatar">🧙‍♂️</div>
+            <div class="sage-speech" id="sageMessage">
+                7日間の学習の集大成だ。全ての技術を統合した管理ツールを作り上げ、真のLinuxマスターとなろう！
+            </div>
+        </div>
+
+        <!-- 固定ナビゲーションボタン -->
+        <div class="fixed-nav">
+            <button class="nav-button home-btn" onclick="confirmReturnHome()" title="メイン画面に戻る">
+                🏠 メイン画面に戻る
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

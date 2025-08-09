@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day3 事前学習 - ファイル閲覧と編集</title>
+    <link rel="stylesheet" href="slides-style.css">
+</head>
+<body>
+    <div class="slides-container">
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1>📚 デジタル考古学者への道</h1>
+                
+                <div class="message-block highlight">
+                    <h2>なぜファイル閲覧技術が「高年収スキル」なのか？</h2>
+                </div>
+
+                <div class="content-section">
+                    <h3>🔍 システム管理者の日常</h3>
+                    <ul>
+                        <li>ログファイルから障害原因を特定→年収500-700万円レベル</li>
+                        <li>設定ファイルを読んでシステム最適化→年収600-900万円レベル</li>
+                        <li>コードレビューで品質管理→年収700-1200万円レベル</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>💎 今日学ぶ価値</h3>
+                    <div class="command-intro">
+                        <p><strong>cat, less, head, tail, nano = プロの調査ツール</strong></p>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <span class="command">less</span>
+                                <span class="description">→ 大容量ログファイルの効率的閲覧</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">head</span>
+                                <span class="description">→ エラーログの最新情報を瞬時に確認</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">tail</span>
+                                <span class="description">→ リアルタイムログ監視</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">nano</span>
+                                <span class="description">→ 設定ファイルの安全な編集</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 キャリアインパクト</h3>
+                    <p class="confidence-message">この技術で「ファイルが読めない人」から「システムの問題を解決できる人」へ<br>
+                    DevOps・SREエンジニアへの基盤スキル習得</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>🔍 実務で使うファイル閲覧術</h1>
+
+                <div class="scene-section">
+                    <h2>🚨 現場の緊急対応例</h2>
+                    
+                    <div class="command-usage">
+                        <h3>1. 障害調査の基本フロー</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>tail -f /var/log/nginx/error.log</code>
+                                <span>→ Webサーバーのエラーをリアルタイム監視</span>
+                            </div>
+                            <div class="example">
+                                <code>head -20 application.log</code>
+                                <span>→ アプリケーションエラーの最新20件を確認</span>
+                            </div>
+                            <div class="example">
+                                <code>less +G large-log.txt</code>
+                                <span>→ 巨大ログファイルの最後から閲覧開始</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>2. 設定ファイル管理</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>cat /etc/nginx/nginx.conf</code>
+                                <span>→ サーバー設定の確認</span>
+                            </div>
+                            <div class="example">
+                                <code>nano /etc/hosts</code>
+                                <span>→ ホスト設定の安全な編集</span>
+                            </div>
+                            <div class="example">
+                                <code>grep "error" *.log</code>
+                                <span>→ 全ログファイルからエラーを検索</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>3. 効率的な情報収集</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>cat -n script.sh</code>
+                                <span>→ スクリプトを行番号付きで確認</span>
+                            </div>
+                            <div class="example">
+                                <code>less /proc/meminfo</code>
+                                <span>→ システムメモリ情報の詳細確認</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>🎯 今日の習得目標</h3>
+                    <p class="goal-message">プロレベルのファイル調査技術をマスター</p>
+                    <p class="preview">明日はファイルの権限システムを学ぶ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>🎮 ファイル閲覧・編集ミニゲーム</h1>
+
+                <div class="experience-section">
+                    <h2>これから体験すること</h2>
+                    <p class="sub-title">実際の現場と同じツールを使って：</p>
+                    <ul class="experience-list">
+                        <li>様々な方法でファイル内容を効率的に確認</li>
+                        <li>大容量ファイルをlessで快適に閲覧</li>
+                        <li>nanoエディタでファイルを安全に編集</li>
+                        <li>grepを使った高速検索テクニック</li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h2>🧙‍♂️ 学習サポート機能</h2>
+                    <div class="support-features">
+                        <div class="support-item">
+                            <h3>実践的な学習環境</h3>
+                            <ul>
+                                <li>実際のログファイル形式でのサンプルデータ</li>
+                                <li>エディタ操作の詳細ガイド</li>
+                                <li>検索機能の実践的な使い方</li>
+                                <li>プロの現場で使われる技術を体験</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h2>🎯 今日のゴール</h2>
+                    <div class="goal-quotes">
+                        <p class="quote">「ファイルの中身が自由自在に見れる！」</p>
+                        <p class="quote">「プロと同じ調査手法を身につけた！」</p>
+                    </div>
+                    <p class="goal-description">システム管理者レベルの基礎スキル習得</p>
+                </div>
+
+                <div class="start-section">
+                    <button class="start-minigame-btn" onclick="startMinigame()">
+                        📖 ファイル閲覧術を始める
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-navigation">
+            <button class="nav-btn prev-btn" onclick="previousSlide()" id="prevBtn">← 前へ</button>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">次へ →</button>
+        </div>
+    </div>
+
+    <script src="slides-script.js"></script>
+</body>
+</html>

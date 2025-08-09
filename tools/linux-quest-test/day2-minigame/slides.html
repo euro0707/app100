@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day2 事前学習 - ディレクトリとファイル操作</title>
+    <link rel="stylesheet" href="slides-style.css">
+</head>
+<body>
+    <div class="slides-container">
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1>🗺️ デジタル世界の住所システム</h1>
+                
+                <div class="message-block highlight">
+                    <h2>なぜディレクトリ操作が「稼げるスキル」なのか？</h2>
+                </div>
+
+                <div class="content-section">
+                    <h3>💼 現実の開発現場で</h3>
+                    <ul>
+                        <li>プロジェクトフォルダの整理は開発の基本</li>
+                        <li>「どこに何があるか」を理解できない人は開発チームで信頼されない</li>
+                        <li>ファイル整理ができる = チーム開発で重宝される人材</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 今日学ぶ価値</h3>
+                    <div class="command-intro">
+                        <p><strong>mkdir, cd, touch, cat = プロの基本ツール</strong></p>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <span class="command">mkdir</span>
+                                <span class="description">→ プロジェクト構造を作る</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">cd</span>
+                                <span class="description">→ 作業場所を自在に移動</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">touch</span>
+                                <span class="description">→ 素早くファイル作成</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">cat</span>
+                                <span class="description">→ 中身を瞬時に確認</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🚀 キャリアへの影響</h3>
+                    <p class="confidence-message">これができれば「ファイル操作で迷う人」から「効率的に作業できる人」へ<br>
+                    開発チームでの評価が確実に上がる</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>🛠️ 実務で使うディレクトリ操作</h1>
+
+                <div class="scene-section">
+                    <h2>💻 開発現場の実例</h2>
+                    
+                    <div class="command-usage">
+                        <h3>1. プロジェクト構築</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>mkdir my-project</code>
+                                <span>→ 新規プロジェクトフォルダ作成</span>
+                            </div>
+                            <div class="example">
+                                <code>cd my-project</code>
+                                <span>→ プロジェクトディレクトリに移動</span>
+                            </div>
+                            <div class="example">
+                                <code>mkdir src docs tests</code>
+                                <span>→ 標準的なフォルダ構造を一気に作成</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>2. ファイル管理の実務</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>touch README.md</code>
+                                <span>→ プロジェクトの説明書を作成</span>
+                            </div>
+                            <div class="example">
+                                <code>echo "# My Project" > README.md</code>
+                                <span>→ タイトルを書き込み</span>
+                            </div>
+                            <div class="example">
+                                <code>cat package.json</code>
+                                <span>→ 設定ファイルの中身を確認</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>3. 効率的な移動術</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>cd ~</code>
+                                <span>→ ホームディレクトリに瞬間移動</span>
+                            </div>
+                            <div class="example">
+                                <code>cd ..</code>
+                                <span>→ 一つ上の階層に移動</span>
+                            </div>
+                            <div class="example">
+                                <code>cd -</code>
+                                <span>→ 直前の場所に戻る</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>🎯 今日の実践目標</h3>
+                    <p class="goal-message">プロと同じファイル整理術をマスターする</p>
+                    <p class="preview">明日はこれらのファイルを詳しく読む技術を学ぶ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>🎮 ディレクトリ操作ミニゲーム体験</h1>
+
+                <div class="experience-section">
+                    <h2>これから体験すること</h2>
+                    <p class="sub-title">仮想Linux環境で実際のディレクトリ操作を練習：</p>
+                    <ul class="experience-list">
+                        <li>自分だけの冒険拠点フォルダを作成</li>
+                        <li>フォルダ間の移動を自在にマスター</li>
+                        <li>記録ファイルを作って内容を書き込み</li>
+                        <li>プロが使う効率的な操作方法を体験</li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h2>🧙‍♂️ 学習サポート</h2>
+                    <div class="support-features">
+                        <div class="support-item">
+                            <h3>段階的な指導システム</h3>
+                            <ul>
+                                <li>各コマンドを一つずつ丁寧に解説</li>
+                                <li>実行結果をリアルタイムで確認</li>
+                                <li>間違えても安全な練習環境</li>
+                                <li>成功するまで何度でもチャレンジ可能</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h2>🎯 今日のゴール</h2>
+                    <div class="goal-quotes">
+                        <p class="quote">「ファイル操作が自然にできるようになった！」</p>
+                        <p class="quote">「プロと同じツールを使えてる！」</p>
+                    </div>
+                    <p class="goal-description">と実感できるレベルに到達</p>
+                </div>
+
+                <div class="start-section">
+                    <button class="start-minigame-btn" onclick="startMinigame()">
+                        🗂️ ディレクトリ操作を始める
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-navigation">
+            <button class="nav-btn prev-btn" onclick="previousSlide()" id="prevBtn">← 前へ</button>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">次へ →</button>
+        </div>
+    </div>
+
+    <script src="slides-script.js"></script>
+</body>
+</html>

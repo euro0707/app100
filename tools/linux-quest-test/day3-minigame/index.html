@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest Day3 - 古き書物の解読術</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="quest-header">
+            <h1>🗡️ Linux Quest Day3: 古き書物の解読術</h1>
+            <p class="sage-message">賢者：「勇者よ、今日は書物を読み解く技術を身につけよう」</p>
+        </header>
+
+        <div class="game-area">
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                    </div>
+                    <div class="terminal-title">Linux Quest Terminal - Day3</div>
+                </div>
+                
+                <div class="terminal" id="terminal">
+                    <div class="terminal-line">
+                        <span class="prompt">quest@linux:~$</span>
+                        <span class="welcome-text">Day3: ファイルの中身を様々な方法で閲覧し、テキストエディタで編集しよう！</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt" id="currentPrompt">quest@linux:~$</span>
+                    <input type="text" id="commandInput" placeholder="コマンドを入力してください" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="quest-progress">
+                <h3>🏆 今日のクエスト進行状況</h3>
+                <div class="progress-list">
+                    <div class="progress-item" id="task-cat-full">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">cat でファイル全体を表示</span>
+                    </div>
+                    <div class="progress-item" id="task-less">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">less でページごとに閲覧</span>
+                    </div>
+                    <div class="progress-item" id="task-head">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">head でファイルの最初の部分を表示</span>
+                    </div>
+                    <div class="progress-item" id="task-tail">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">tail でファイルの最後の部分を表示</span>
+                    </div>
+                    <div class="progress-item" id="task-cat-n">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">cat -n で行番号付きで表示</span>
+                    </div>
+                    <div class="progress-item" id="task-nano">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">nano でファイルを編集</span>
+                    </div>
+                    <div class="progress-item" id="task-grep">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">grep でファイル内を検索</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nano-editor" id="nanoEditor" style="display: none;">
+            <div class="nano-header">
+                <div class="nano-title">GNU nano - adventure_log.txt</div>
+            </div>
+            <div class="nano-content">
+                <textarea id="nanoTextarea" placeholder="ファイルの内容をここに入力してください..."></textarea>
+            </div>
+            <div class="nano-footer">
+                <div class="nano-commands">
+                    <span>^O 保存</span>
+                    <span>^X 終了</span>
+                    <span>^K 行削除</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-panel">
+            <h3>💡 ヒント</h3>
+            <div id="hintText">
+                まずは長い書物を準備してから、catコマンドで全体を読んでみましょう。
+            </div>
+        </div>
+
+        <div class="sage-panel" id="sagePanel">
+            <div class="sage-avatar">🧙‍♂️</div>
+            <div class="sage-speech" id="sageMessage">
+                まずは長い書物を準備してから、様々な読み方を試してみよう。
+            </div>
+        </div>
+
+        <!-- 固定ナビゲーションボタン -->
+        <div class="fixed-nav">
+            <button class="nav-button home-btn" onclick="confirmReturnHome()" title="メイン画面に戻る">
+                🏠 メイン画面に戻る
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

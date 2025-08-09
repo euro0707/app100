@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest Day5 - 魔法の巻物</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="quest-header">
+            <h1>📜 Linux Quest Day5: 魔法の巻物</h1>
+            <p class="sage-message">賢者：「勇者よ、今日は自動化の魔法を学ぼう」</p>
+        </header>
+
+        <div class="game-area">
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                    </div>
+                    <div class="terminal-title">Linux Quest Terminal - Day5</div>
+                </div>
+                
+                <div class="terminal" id="terminal">
+                    <div class="terminal-line">
+                        <span class="prompt">quest@linux:~$</span>
+                        <span class="welcome-text">Day5: シェルスクリプトで自動化の魔法を習得しよう！</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt" id="currentPrompt">quest@linux:~$</span>
+                    <input type="text" id="commandInput" placeholder="コマンドを入力してください" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="quest-progress">
+                <h3>🏆 今日のクエスト進行状況</h3>
+                <div class="progress-list">
+                    <div class="progress-item" id="task-create-script">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">基本的なスクリプトを作成</span>
+                    </div>
+                    <div class="progress-item" id="task-variables">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">変数を使用</span>
+                    </div>
+                    <div class="progress-item" id="task-user-input">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">ユーザー入力を受け取り</span>
+                    </div>
+                    <div class="progress-item" id="task-if-statement">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">if文で条件分岐</span>
+                    </div>
+                    <div class="progress-item" id="task-for-loop">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">for文で繰り返し処理</span>
+                    </div>
+                    <div class="progress-item" id="task-function">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">関数を定義・使用</span>
+                    </div>
+                    <div class="progress-item" id="task-practical-script">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">実用的なスクリプトを完成</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="script-editor" id="scriptEditor" style="display: none;">
+            <div class="editor-header">
+                <div class="editor-title">スクリプトエディタ - <span id="editingFileName"></span></div>
+                <div class="editor-controls">
+                    <button id="saveScript">💾 保存</button>
+                    <button id="closeEditor">❌ 閉じる</button>
+                </div>
+            </div>
+            <div class="editor-content">
+                <textarea id="scriptTextarea" placeholder="#!/bin/bash&#10;# スクリプトをここに書いてください..."></textarea>
+            </div>
+            <div class="editor-footer">
+                <div class="script-tips">
+                    <span>💡 Tips: #!/bin/bash で始める | echo で出力 | read で入力 | if [ 条件 ]; then fi で分岐</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="script-reference">
+            <h3>📖 スクリプト リファレンス</h3>
+            <div class="ref-tabs">
+                <button class="ref-tab active" data-tab="basics">基本</button>
+                <button class="ref-tab" data-tab="variables">変数</button>
+                <button class="ref-tab" data-tab="conditions">条件分岐</button>
+                <button class="ref-tab" data-tab="loops">ループ</button>
+            </div>
+            <div class="ref-content" id="refContent">
+                <div class="ref-section active" data-section="basics">
+                    <div class="ref-item">#!/bin/bash - シェバン</div>
+                    <div class="ref-item">echo "text" - テキスト出力</div>
+                    <div class="ref-item">read var - ユーザー入力</div>
+                </div>
+                <div class="ref-section" data-section="variables">
+                    <div class="ref-item">NAME="value" - 変数定義</div>
+                    <div class="ref-item">$NAME - 変数参照</div>
+                    <div class="ref-item">$(command) - コマンド置換</div>
+                </div>
+                <div class="ref-section" data-section="conditions">
+                    <div class="ref-item">if [ $var -eq 5 ]; then</div>
+                    <div class="ref-item">elif [ $var -gt 10 ]; then</div>
+                    <div class="ref-item">else; fi</div>
+                </div>
+                <div class="ref-section" data-section="loops">
+                    <div class="ref-item">for i in 1 2 3; do</div>
+                    <div class="ref-item">for ((i=1; i<=10; i++)); do</div>
+                    <div class="ref-item">done</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-panel">
+            <h3>💡 ヒント</h3>
+            <div id="hintText">
+                まずはecho "Hello World!" > hello.shで最初のスクリプトを作成しましょう。
+            </div>
+        </div>
+
+        <div class="sage-panel" id="sagePanel">
+            <div class="sage-avatar">🧙‍♂️</div>
+            <div class="sage-speech" id="sageMessage">
+                スクリプトは君の分身となり、自動で作業をしてくれる。今日は魔法使いになる日だ！
+            </div>
+        </div>
+
+        <!-- 固定ナビゲーションボタン -->
+        <div class="fixed-nav">
+            <button class="nav-button home-btn" onclick="confirmReturnHome()" title="メイン画面に戻る">
+                🏠 メイン画面に戻る
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

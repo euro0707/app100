@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day5 事前学習 - シェルスクリプト基礎</title>
+    <link rel="stylesheet" href="slides-style.css">
+</head>
+<body>
+    <div class="slides-container">
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1>🧙‍♂️ 自動化の魔法使いへの道</h1>
+                
+                <div class="message-block highlight">
+                    <h2>なぜスクリプト作成が「最高収入スキル」なのか？</h2>
+                </div>
+
+                <div class="content-section">
+                    <h3>⚡ 自動化エンジニアの価値</h3>
+                    <ul>
+                        <li>手作業を自動化で解決→年収700-1000万円レベル</li>
+                        <li>DevOps自動化パイプライン構築→年収800-1200万円レベル</li>
+                        <li>インフラ自動化設計→年収900-1500万円レベル</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>💎 今日学ぶ価値</h3>
+                    <div class="command-intro">
+                        <p><strong>bash, 変数, if, for = 自動化の基盤技術</strong></p>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <span class="command">#!/bin/bash</span>
+                                <span class="description">→ スクリプトの魔法の呪文</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">変数=$値</span>
+                                <span class="description">→ データを記憶する技術</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">if文</span>
+                                <span class="description">→ 条件に応じた自動判断</span>
+                            </div>
+                            <div class="command-item">
+                                <span class="command">for文</span>
+                                <span class="description">→ 繰り返し処理の自動化</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 キャリアインパクト</h3>
+                    <p class="confidence-message">スクリプトで「手作業する人」から「自動化を設計する人」へ<br>
+                    DevOpsエンジニア・SREへの必須スキル</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>🤖 実務で使う自動化スクリプト</h1>
+
+                <div class="scene-section">
+                    <h2>🏭 自動化の現場例</h2>
+                    
+                    <div class="command-usage">
+                        <h3>1. システム監視自動化</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>if [ -f /var/log/error.log ]; then</code>
+                                <span>→ エラーログ存在チェック</span>
+                            </div>
+                            <div class="example">
+                                <code>for file in *.log; do</code>
+                                <span>→ 全ログファイルの一括処理</span>
+                            </div>
+                            <div class="example">
+                                <code>backup_date=$(date +%Y%m%d)</code>
+                                <span>→ 動的なバックアップ名生成</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>2. 開発環境セットアップ</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>#!/bin/bash</code>
+                                <span>→ スクリプトの開始宣言</span>
+                            </div>
+                            <div class="example">
+                                <code>PROJECT_NAME="my-app"</code>
+                                <span>→ プロジェクト名を変数で管理</span>
+                            </div>
+                            <div class="example">
+                                <code>mkdir -p $PROJECT_NAME/src</code>
+                                <span>→ 変数を使った動的フォルダ作成</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-usage">
+                        <h3>3. データ処理自動化</h3>
+                        <div class="usage-examples">
+                            <div class="example">
+                                <code>while read line; do</code>
+                                <span>→ ファイルを1行ずつ処理</span>
+                            </div>
+                            <div class="example">
+                                <code>echo "処理完了: $(date)" >> log.txt</code>
+                                <span>→ 処理ログの自動記録</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>🎯 今日の習得目標</h3>
+                    <p class="goal-message">プロレベルの自動化スクリプト作成技術をマスター</p>
+                    <p class="preview">明日はパイプとリダイレクトを学ぶ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>🎮 スクリプト作成ミニゲーム</h1>
+
+                <div class="experience-section">
+                    <h2>これから体験すること</h2>
+                    <p class="sub-title">実際の自動化スクリプトを作成：</p>
+                    <ul class="experience-list">
+                        <li>変数を使ったデータ管理</li>
+                        <li>if文での条件分岐処理</li>
+                        <li>for文での繰り返し自動化</li>
+                        <li>実用的な自動化スクリプトの完成</li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h2>🧙‍♂️ スクリプト学習サポート</h2>
+                    <div class="support-features">
+                        <div class="support-item">
+                            <h3>段階的プログラミング学習</h3>
+                            <ul>
+                                <li>基本構文の詳細解説</li>
+                                <li>実用的なスクリプト例の紹介</li>
+                                <li>エラー対処法とデバッグ技術</li>
+                                <li>プロが使う効率的な書き方</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h2>🎯 今日のゴール</h2>
+                    <div class="goal-quotes">
+                        <p class="quote">「自分でスクリプトが書けるようになった！」</p>
+                        <p class="quote">「自動化の威力を実感できた！」</p>
+                    </div>
+                    <p class="goal-description">DevOpsエンジニアの基盤スキル習得</p>
+                </div>
+
+                <div class="start-section">
+                    <button class="start-minigame-btn" onclick="startMinigame()">
+                        📜 スクリプト作成を始める
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-navigation">
+            <button class="nav-btn prev-btn" onclick="previousSlide()" id="prevBtn">← 前へ</button>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">次へ →</button>
+        </div>
+    </div>
+
+    <script src="slides-script.js"></script>
+</body>
+</html>

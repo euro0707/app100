@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Quest Day4 - 守護の印章</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="quest-header">
+            <h1>🛡️ Linux Quest Day4: 守護の印章</h1>
+            <p class="sage-message">賢者：「勇者よ、今日は権限という重要な概念を学ぼう」</p>
+        </header>
+
+        <div class="game-area">
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                    </div>
+                    <div class="terminal-title">Linux Quest Terminal - Day4</div>
+                </div>
+                
+                <div class="terminal" id="terminal">
+                    <div class="terminal-line">
+                        <span class="prompt">quest@linux:~$</span>
+                        <span class="welcome-text">Day4: ファイルの権限システムを理解し、chmodで権限を操作しよう！</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt" id="currentPrompt">quest@linux:~$</span>
+                    <input type="text" id="commandInput" placeholder="コマンドを入力してください" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="quest-progress">
+                <h3>🏆 今日のクエスト進行状況</h3>
+                <div class="progress-list">
+                    <div class="progress-item" id="task-ls-l">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">ls -l で権限情報を表示</span>
+                    </div>
+                    <div class="progress-item" id="task-chmod-number">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">chmod 数字で権限変更</span>
+                    </div>
+                    <div class="progress-item" id="task-chmod-letter">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">chmod 文字で権限変更</span>
+                    </div>
+                    <div class="progress-item" id="task-script-execute">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">実行可能スクリプトを作成</span>
+                    </div>
+                    <div class="progress-item" id="task-run-script">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">./でスクリプトを実行</span>
+                    </div>
+                    <div class="progress-item" id="task-directory-permission">
+                        <span class="checkbox">☐</span>
+                        <span class="task-text">ディレクトリの権限を理解</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="permission-guide" id="permissionGuide">
+            <h3>🔒 権限ガイド</h3>
+            <div class="permission-table">
+                <div class="permission-row">
+                    <div class="permission-label">読み取り (r)</div>
+                    <div class="permission-value">4</div>
+                    <div class="permission-desc">ファイルの内容を見ることができる</div>
+                </div>
+                <div class="permission-row">
+                    <div class="permission-label">書き込み (w)</div>
+                    <div class="permission-value">2</div>
+                    <div class="permission-desc">ファイルを変更・削除できる</div>
+                </div>
+                <div class="permission-row">
+                    <div class="permission-label">実行 (x)</div>
+                    <div class="permission-value">1</div>
+                    <div class="permission-desc">ファイルを実行できる</div>
+                </div>
+            </div>
+            <div class="common-permissions">
+                <h4>よく使うパターン</h4>
+                <div class="perm-example">644 = rw-r--r-- (一般ファイル)</div>
+                <div class="perm-example">755 = rwxr-xr-x (実行ファイル)</div>
+                <div class="perm-example">600 = rw------- (秘密ファイル)</div>
+            </div>
+        </div>
+
+        <div class="hint-panel">
+            <h3>💡 ヒント</h3>
+            <div id="hintText">
+                まずはls -lコマンドでファイルの権限情報を詳しく見てみましょう。
+            </div>
+        </div>
+
+        <div class="sage-panel" id="sagePanel">
+            <div class="sage-avatar">🧙‍♂️</div>
+            <div class="sage-speech" id="sageMessage">
+                権限は安全なシステムの基盤だ。まずは現在の権限を確認することから始めよう。
+            </div>
+        </div>
+
+        <!-- 固定ナビゲーションボタン -->
+        <div class="fixed-nav">
+            <button class="nav-button home-btn" onclick="confirmReturnHome()" title="メイン画面に戻る">
+                🏠 メイン画面に戻る
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day1 スライドテスト</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .test-result { padding: 10px; margin: 10px 0; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .info { background: #d1ecf1; border-left: 4px solid #17a2b8; }
+        iframe { width: 100%; height: 600px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Linux Quest v2.0 - Day1 スライドテスト</h1>
+    
+    <div class="test-section">
+        <h2>📋 テスト項目</h2>
+        <ul>
+            <li>✅ HTMLファイルの読み込み</li>
+            <li>✅ CSSスタイルの適用</li>
+            <li>✅ JavaScriptの動作</li>
+            <li>⏳ スライドナビゲーション</li>
+            <li>⏳ 進捗保存機能</li>
+            <li>⏳ レスポンシブデザイン</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Day1 スライドプレビュー</h2>
+        <p>以下のフレーム内でスライドの動作をテストしてください：</p>
+        
+        <iframe src="day1-minigame/slides.html" title="Day1 Slides Test"></iframe>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 手動テストチェックリスト</h2>
+        
+        <div class="test-result info">
+            <h3>基本動作テスト</h3>
+            <ul>
+                <li>□ スライド1が正常に表示される</li>
+                <li>□ 「次へ」ボタンでスライド2に移動</li>
+                <li>□ 「前へ」ボタンでスライド1に戻る</li>
+                <li>□ インジケーター（●）クリックで任意のスライドに移動</li>
+                <li>□ スライド3で「ミニゲームを始める」ボタンが表示</li>
+            </ul>
+        </div>
+
+        <div class="test-result info">
+            <h3>デザイン・レスポンシブテスト</h3>
+            <ul>
+                <li>□ 青紫グラデーション背景が正常に表示</li>
+                <li>□ フォントとレイアウトが読みやすい</li>
+                <li>□ ブラウザ幅を変更してもレイアウトが崩れない</li>
+            </ul>
+        </div>
+
+        <div class="test-result info">
+            <h3>コンテンツテスト</h3>
+            <ul>
+                <li>□ スライド1: 価値提案とモチベーション内容</li>
+                <li>□ スライド2: 実用的な使用例とコマンド解説</li>
+                <li>□ スライド3: ミニゲーム開始への導入</li>
+                <li>□ 年収・キャリア訴求が適切に表示</li>
+            </ul>
+        </div>
+
+        <div class="test-result info">
+            <h3>機能テスト</h3>
+            <ul>
+                <li>□ キーボード操作（←→）でスライド移動</li>
+                <li>□ 「ミニゲームを始める」ボタンクリックで確認ダイアログ表示</li>
+                <li>□ ブラウザのLocalStorageに進捗が保存される</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 テスト結果記録</h2>
+        <p>テスト完了後、問題点があれば以下に記録：</p>
+        <textarea rows="6" cols="80" placeholder="
+例：
+- スライド2の文字が小さすぎる
+- ボタンの反応が遅い
+- モバイル表示で文字が切れる
+- などの問題点を記録
+        "></textarea>
+    </div>
+
+    <div class="test-section">
+        <h2>🔗 関連ファイル</h2>
+        <ul>
+            <li><a href="day1-minigame/slides.html" target="_blank">slides.html</a></li>
+            <li><a href="day1-minigame/slides-style.css" target="_blank">slides-style.css</a></li>
+            <li><a href="day1-minigame/slides-script.js" target="_blank">slides-script.js</a></li>
+        </ul>
+    </div>
+
+    <script>
+        // 簡単なテスト支援スクリプト
+        console.log('Day1 スライドテストページが読み込まれました');
+        
+        // LocalStorage監視
+        const originalSetItem = localStorage.setItem;
+        localStorage.setItem = function(key, value) {
+            console.log('LocalStorage保存:', key, value);
+            originalSetItem.apply(this, arguments);
+        };
+        
+        // ページ読み込み完了の確認
+        window.addEventListener('load', function() {
+            console.log('✅ テストページの読み込みが完了しました');
+        });
+    </script>
+</body>
+</html>
