@@ -28,8 +28,12 @@ class ThreeDoorsLogicMaze {
         // 迷路データ
         this.mazeData = null;
         this.playerPosition = { x: 0, y: 0 };
-        this.playerTarget = { x: 0, y: 0 };
+        this.playerTarget = null;
+        this.playerRenderPos = { x: 0, y: 0 }; // 実際の描画位置（補間用）
         this.isMoving = false;
+        this.moveSpeed = 4.0; // タイル/秒
+        this.gameLoopRunning = false;
+        this.animationId = null;
         
         // タッチ/ドラッグ関連
         this.isDragging = false;
@@ -47,11 +51,26 @@ class ThreeDoorsLogicMaze {
             plane: { icon: '✈️', name: 'ひこうき', sound: 'plane_engine' }
         };
         
-        // サンプルお題データ（後でJSONから読み込み）
+        // 論理思考学習お題（段階的難易度）
         this.sampleTasks = [
-            { targetDoor: 'middle', text: 'まんなかの ドアを あけよう！' },
-            { targetDoor: 'left', text: 'ひだりの ドアを あけよう！' },
-            { targetDoor: 'right', text: 'みぎの ドアを あけよう！' }
+            { 
+                targetDoor: 'left', 
+                text: 'あかいカギを さがして ひだりのドアを あけよう！',
+                hint: 'あかい🔑が ひつようだよ',
+                learning: '条件を満たしてから行動する'
+            },
+            { 
+                targetDoor: 'middle', 
+                text: 'みどりスイッチを ONにして まんなかのドアを あけよう！',
+                hint: 'みどり🔘を ONに してね',
+                learning: '状態を変更してから行動する'
+            },
+            { 
+                targetDoor: 'right', 
+                text: 'ほしバッジを あつめて みぎのドアを あけよう！',
+                hint: 'きらきら⭐が ひつようだよ',
+                learning: '複数の条件を組み合わせる'
+            }
         ];
         
         this.init();
@@ -64,8 +83,7 @@ class ThreeDoorsLogicMaze {
         this.updateSoundToggle();
         this.showScreen('start');
         
-        // 簡易迷路データをセット（後で外部ファイルから読み込み）
-        this.loadSampleMaze();
+        // 初期化時は迷路データを生成しない（ゲーム開始時に生成）
     }
     
     bindElements() {
@@ -195,10 +213,11 @@ class ThreeDoorsLogicMaze {
         
         startEvents.forEach(eventName => {
             this.canvas.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            this.isDragging = true;
-            this.updateTouchPosition(e);
-            this.moveToward(e);
+                e.preventDefault();
+                this.isDragging = true;
+                this.updateTouchPosition(e);
+                this.moveToward(e);
+            });
         });
         
         // タッチ/マウス移動
@@ -215,9 +234,10 @@ class ThreeDoorsLogicMaze {
         // タッチ/マウス終了
         endEvents.forEach(eventName => {
             this.canvas.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            this.isDragging = false;
-            this.stopMoving();
+                e.preventDefault();
+                this.isDragging = false;
+                this.stopMoving();
+            });
         });
         
         // キャンバス外でのイベント終了
@@ -298,10 +318,13 @@ class ThreeDoorsLogicMaze {
             // SE再生
             this.playSE('select');
             
-            // 少し待ってからお題画面へ
+            // 少し待ってから直接ゲーム開始
             setTimeout(() => {
+                console.log('Setting up task...');
                 this.setupTask();
-                this.showScreen('task');
+                console.log('Current task:', this.currentTask);
+                console.log('Starting game...');
+                this.startGame();
             }, 800);
         }
     }
@@ -310,8 +333,14 @@ class ThreeDoorsLogicMaze {
     setupTask() {
         if (!this.selectedVehicle) return;
         
-        // ランダムにお題を選択
-        this.currentTask = this.sampleTasks[Math.floor(Math.random() * this.sampleTasks.length)];
+        // 段階的学習：簡単な順番で提示（ランダムではなく順序立てて）
+        if (!this.completedTasks) {
+            this.completedTasks = new Set();
+        }
+        
+        // 未完了のお題から最も簡単なものを選択
+        const availableTasks = this.sampleTasks.filter((_, index) => !this.completedTasks.has(index));
+        this.currentTask = availableTasks[0] || this.sampleTasks[0]; // 全部完了したら最初に戻る
         
         // お題画面の更新
         if (this.taskCharacterIcon) {
@@ -363,13 +392,16 @@ class ThreeDoorsLogicMaze {
     startGame() {
         if (!this.selectedVehicle || !this.currentTask) return;
         
-        // プレイヤー位置をリセット
-        this.resetPlayer();
-        
         // インベントリをクリア
         this.inventory.items.clear();
         this.inventory.switches.clear();
         this.inventory.badges.clear();
+        
+        // 現在のお題に応じた迷路を生成
+        this.loadSampleMaze();
+        
+        // プレイヤー位置をリセット（迷路生成後）
+        this.resetPlayer();
         
         // 進捗時間をリセット
         this.lastProgressTime = Date.now();
@@ -402,10 +434,37 @@ class ThreeDoorsLogicMaze {
         
         // ヒントタイマー開始
         this.startHintTimer();
+        
+        // ゲームループ開始
+        this.startGameLoop();
     }
     
     // サンプル迷路データ読み込み（後で外部ファイル化）
     loadSampleMaze() {
+        // 現在のお題に応じて必要なアイテムとドアだけを生成
+        const task = this.currentTask;
+        let items = [];
+        let switches = [];
+        let doors = [];
+        
+        if (task && task.targetDoor === 'left') {
+            // レベル1: あかいカギのみ
+            items = [{ id: "key-red", pos: { x: 3, y: 5 }, icon: "🔑", name: "あかいカギ", collected: false }];
+            doors = [{ id: "left", pos: { x: 7, y: 13 }, condition: { type: "hasItem", value: "key-red" }, icon: "🔑" }];
+        } else if (task && task.targetDoor === 'middle') {
+            // レベル2: みどりスイッチのみ
+            switches = [{ id: "switch-green", pos: { x: 5, y: 10 }, icon: "🔘", name: "みどりスイッチ", state: "OFF" }];
+            doors = [{ id: "middle", pos: { x: 7, y: 13 }, condition: { type: "switchOn", value: "switch-green" }, icon: "🔘" }];
+        } else if (task && task.targetDoor === 'right') {
+            // レベル3: ほしバッジのみ
+            items = [{ id: "badge-star", pos: { x: 7, y: 8 }, icon: "⭐", name: "ほしバッジ", collected: false }];
+            doors = [{ id: "right", pos: { x: 7, y: 13 }, condition: { type: "hasBadge", value: "badge-star" }, icon: "⭐" }];
+        } else {
+            // デフォルト（最初のお題）
+            items = [{ id: "key-red", pos: { x: 3, y: 5 }, icon: "🔑", name: "あかいカギ", collected: false }];
+            doors = [{ id: "left", pos: { x: 7, y: 13 }, condition: { type: "hasItem", value: "key-red" }, icon: "🔑" }];
+        }
+        
         this.mazeData = {
             id: "sample_maze",
             tileSize: 32,
@@ -413,19 +472,10 @@ class ThreeDoorsLogicMaze {
             height: 15,
             grid: this.generateSampleGrid(),
             start: { x: 1, y: 1 },
-            goalArea: { x: 8, y: 13 },
-            items: [
-                { id: "red_key", pos: { x: 3, y: 5 }, icon: "🔑", collected: false },
-                { id: "star_badge", pos: { x: 7, y: 8 }, icon: "⭐", collected: false }
-            ],
-            switches: [
-                { id: "green_switch", pos: { x: 5, y: 10 }, icon: "🔘", state: "OFF" }
-            ],
-            doors: [
-                { id: "left", pos: { x: 6, y: 13 }, condition: { type: "hasItem", value: "red_key" }, icon: "🔑" },
-                { id: "middle", pos: { x: 7, y: 13 }, condition: { type: "switchOn", value: "green_switch" }, icon: "🔘" },
-                { id: "right", pos: { x: 8, y: 13 }, condition: { type: "hasBadge", value: "star_badge" }, icon: "⭐" }
-            ]
+            goalArea: { x: 7, y: 13 },
+            items: items,
+            switches: switches,
+            doors: doors
         };
     }
     
@@ -434,32 +484,45 @@ class ThreeDoorsLogicMaze {
         const height = 15;
         const grid = Array(height).fill().map(() => Array(width).fill(0)); // 0 = 壁
         
-        // 簡単な迷路パターンを生成
+        // 固定迷路パターン（論理思考学習に適した設計）
         // 1 = 道, 2 = スタート, 3 = ゴールエリア
         
-        // 基本的な道を作成
-        for (let y = 1; y < height - 1; y++) {
-            for (let x = 1; x < width - 1; x++) {
-                if ((x % 2 === 1 && y % 2 === 1) || 
-                    (x % 2 === 1 && Math.random() > 0.7) ||
-                    (y % 2 === 1 && Math.random() > 0.7)) {
-                    grid[y][x] = 1;
-                }
+        // より広い通路を設計（4-6歳児が移動しやすい）
+        const paths = [
+            // メイン縦路（2マス幅）
+            [1,1], [1,2], [1,3], [1,4], [1,5], [1,6], [1,7], [1,8], [1,9], [1,10], [1,11], [1,12],
+            [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8], [2,9], [2,10], [2,11], [2,12],
+            
+            // 赤いカギエリア（広いスペース）
+            [3,4], [3,5], [3,6], [4,4], [4,5], [4,6],
+            
+            // スイッチエリアへの路（2マス幅）
+            [3,9], [3,10], [3,11], [4,9], [4,10], [4,11], [5,9], [5,10], [5,11],
+            
+            // 星バッジエリア（広いスペース）
+            [6,7], [6,8], [6,9], [7,7], [7,8], [7,9], [8,7], [8,8], [8,9],
+            
+            // ゴールエリアへの路（3マス幅）
+            [5,12], [5,13], [6,12], [6,13], [7,12], [7,13], [8,12], [8,13],
+            
+            // 接続路
+            [4,7], [4,8], [5,7], [5,8]
+        ];
+        
+        // 経路を道として設定
+        paths.forEach(([x, y]) => {
+            if (x >= 0 && x < width && y >= 0 && y < height) {
+                grid[y][x] = 1;
             }
-        }
+        });
         
         // スタート地点
         grid[1][1] = 2;
         
         // ゴールエリア
-        for (let x = 6; x <= 8; x++) {
-            grid[13][x] = 3;
-        }
-        
-        // ゴールエリアへのアクセス路を確保
-        for (let y = 11; y <= 13; y++) {
-            grid[y][7] = 1;
-        }
+        grid[13][6] = 3;
+        grid[13][7] = 3;
+        grid[13][8] = 3;
         
         return grid;
     }
@@ -468,7 +531,8 @@ class ThreeDoorsLogicMaze {
     resetPlayer() {
         if (this.mazeData) {
             this.playerPosition = { ...this.mazeData.start };
-            this.playerTarget = { ...this.mazeData.start };
+            this.playerTarget = null;
+            this.isMoving = false;
         }
     }
     
@@ -579,13 +643,136 @@ class ThreeDoorsLogicMaze {
     
     // 移動関連
     moveToward(e) {
-        // 実装予定：タッチ位置に向かって移動
-        console.log('Moving toward:', this.lastTouchPos);
+        if (!this.mazeData || this.isMoving) return;
+
+        // タッチ位置をタイル座標に変換
+        const tileSize = this.mazeData.tileSize;
+        const targetX = Math.floor(this.lastTouchPos.x / tileSize);
+        const targetY = Math.floor(this.lastTouchPos.y / tileSize);
+
+        // 境界チェック
+        if (targetX < 0 || targetX >= this.mazeData.width || 
+            targetY < 0 || targetY >= this.mazeData.height) {
+            return;
+        }
+
+        // 壁チェック（0は壁、1以上は通行可能）
+        const tileType = this.mazeData.grid[targetY][targetX];
+        if (tileType === 0) {
+            console.log('Cannot move to wall at', targetX, targetY);
+            return;
+        }
+        
+        // 斜め移動時の経路チェック（壁を通り抜け防止）
+        const currentX = Math.floor(this.playerPosition.x);
+        const currentY = Math.floor(this.playerPosition.y);
+        
+        if (this.hasWallBetween(currentX, currentY, targetX, targetY)) {
+            console.log('Path blocked by wall from', currentX, currentY, 'to', targetX, targetY);
+            return;
+        }
+        
+        console.log(`Moving to tile (${targetX},${targetY}) - type: ${tileType}`);
+
+        // 目標位置設定
+        this.playerTarget = { x: targetX, y: targetY };
+        this.isMoving = true;
         this.lastProgressTime = Date.now();
+        
+        console.log('Moving from', this.playerPosition, 'toward', this.playerTarget);
     }
     
     stopMoving() {
         this.isMoving = false;
+    }
+    
+    // 斜め移動時の壁通り抜けチェック
+    hasWallBetween(x1, y1, x2, y2) {
+        // 同じタイルまたは隣接タイルの場合はチェック不要
+        if (Math.abs(x2 - x1) <= 1 && Math.abs(y2 - y1) <= 1) {
+            return false;
+        }
+        
+        // Bresenhamのライン描画アルゴリズムで経路上の全タイルをチェック
+        const dx = Math.abs(x2 - x1);
+        const dy = Math.abs(y2 - y1);
+        const sx = x1 < x2 ? 1 : -1;
+        const sy = y1 < y2 ? 1 : -1;
+        let err = dx - dy;
+        
+        let x = x1;
+        let y = y1;
+        
+        while (true) {
+            // 現在の位置が壁かチェック
+            if (x >= 0 && x < this.mazeData.width && 
+                y >= 0 && y < this.mazeData.height && 
+                this.mazeData.grid[y][x] === 0) {
+                return true; // 壁が見つかった
+            }
+            
+            // 目標に到達したら終了
+            if (x === x2 && y === y2) break;
+            
+            const e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x += sx;
+            }
+            if (e2 < dx) {
+                err += dx;
+                y += sy;
+            }
+        }
+        
+        return false; // 壁は見つからなかった
+    }
+    
+    // ゲームループ - プレイヤー移動アニメーション
+    gameLoop() {
+        if (this.gameLoopRunning) {
+            if (this.isMoving && this.playerTarget) {
+                this.updatePlayerMovement();
+            }
+            
+            // アニメーションフレーム継続
+            requestAnimationFrame(() => this.gameLoop());
+        }
+    }
+    
+    updatePlayerMovement() {
+        if (!this.playerTarget) return;
+        
+        const currentTime = Date.now();
+        const deltaTime = currentTime - this.lastProgressTime;
+        const moveSpeed = this.moveSpeed; // タイル/秒 (コンストラクタで4.0に設定)
+        
+        // 目標との距離計算（タイル単位）
+        const dx = this.playerTarget.x - this.playerPosition.x;
+        const dy = this.playerTarget.y - this.playerPosition.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 0.05) {
+            // 目標到達
+            this.playerPosition.x = this.playerTarget.x;
+            this.playerPosition.y = this.playerTarget.y;
+            this.isMoving = false;
+            this.playerTarget = null;
+            
+            // アイテム・スイッチの衝突判定
+            this.checkCollisions();
+            
+        } else {
+            // 移動継続（タイル単位で計算）
+            const progress = Math.min((moveSpeed * deltaTime / 1000) / distance, 1.0);
+            this.playerPosition.x += dx * progress;
+            this.playerPosition.y += dy * progress;
+        }
+        
+        this.lastProgressTime = currentTime;
+        
+        // 迷路再描画
+        this.drawMaze();
     }
     
     // UI更新
@@ -600,8 +787,19 @@ class ThreeDoorsLogicMaze {
             if (item) {
                 const itemEl = document.createElement('div');
                 itemEl.className = 'inventory-item collected';
-                itemEl.innerHTML = `${item.icon} ${item.id}`;
+                itemEl.innerHTML = `${item.icon} ${item.name || item.id}`;
                 this.inventory_ui.appendChild(itemEl);
+            }
+        });
+        
+        // バッジ表示
+        this.inventory.badges.forEach(badgeId => {
+            const badge = this.findItemById(badgeId);
+            if (badge) {
+                const badgeEl = document.createElement('div');
+                badgeEl.className = 'inventory-item collected';
+                badgeEl.innerHTML = `${badge.icon} ${badge.name || badge.id}`;
+                this.inventory_ui.appendChild(badgeEl);
             }
         });
         
@@ -611,7 +809,7 @@ class ThreeDoorsLogicMaze {
             if (switchItem) {
                 const switchEl = document.createElement('div');
                 switchEl.className = `inventory-item ${state === 'ON' ? 'collected' : ''}`;
-                switchEl.innerHTML = `${switchItem.icon} ${state}`;
+                switchEl.innerHTML = `${switchItem.icon} ${switchItem.name || switchItem.id}: ${state}`;
                 this.inventory_ui.appendChild(switchEl);
             }
         });
@@ -770,9 +968,9 @@ class ThreeDoorsLogicMaze {
             }, 3000);
         }
         
-        // メッセージでもヒント
-        if (this.gameMessage) {
-            this.gameMessage.textContent = 'まずは あかい かぎを さがしてね！';
+        // 現在のお題に応じた論理的ヒント
+        if (this.gameMessage && this.currentTask) {
+            this.gameMessage.textContent = this.currentTask.hint || 'がんばって！';
         }
     }
     
@@ -783,12 +981,12 @@ class ThreeDoorsLogicMaze {
         }
         
         if (this.successMessage && this.currentTask) {
-            const doorNames = {
-                left: 'ひだり',
-                middle: 'まんなか',
-                right: 'みぎ'
+            const messages = {
+                left: 'あかいカギで ドアがひらいたよ！\nレベル1 クリア！',
+                middle: 'みどりスイッチで ドアがひらいたよ！\nレベル2 クリア！',
+                right: 'ほしバッジで ドアがひらいたよ！\nレベル3 クリア！'
             };
-            this.successMessage.textContent = `${doorNames[this.currentTask.targetDoor]}のドアが ひらいたよ！`;
+            this.successMessage.textContent = messages[this.currentTask.targetDoor] || 'おめでとう！';
         }
         
         this.playSE('success');
@@ -807,6 +1005,124 @@ class ThreeDoorsLogicMaze {
         this.currentTask = null;
         this.clearHintTimer();
         this.showScreen('start');
+    }
+    
+    // ゲームループ開始
+    startGameLoop() {
+        if (!this.gameLoopRunning) {
+            this.gameLoopRunning = true;
+            this.gameLoop();
+        }
+    }
+    
+    // ゲームループ停止
+    stopGameLoop() {
+        this.gameLoopRunning = false;
+    }
+    
+    // アイテム・スイッチの衝突判定
+    checkCollisions() {
+        const playerTileX = Math.floor(this.playerPosition.x);
+        const playerTileY = Math.floor(this.playerPosition.y);
+        
+        // アイテム取得判定
+        if (this.mazeData.items) {
+            this.mazeData.items.forEach(item => {
+                if (!item.collected && 
+                    item.pos.x === playerTileX && 
+                    item.pos.y === playerTileY) {
+                    
+                    // アイテム取得
+                    item.collected = true;
+                    
+                    // アイテムタイプに応じて適切なインベントリに追加
+                    if (item.id.includes('badge')) {
+                        this.inventory.badges.add(item.id);
+                    } else {
+                        this.inventory.items.add(item.id);
+                    }
+                    
+                    this.playSE('pickup');
+                    
+                    console.log(`Collected item: ${item.id}`);
+                    this.updateInventoryUI();
+                }
+            });
+        }
+        
+        // スイッチ切替判定（同じ位置での連続切替を防ぐ）
+        if (this.mazeData.switches) {
+            this.mazeData.switches.forEach(sw => {
+                if (sw.pos.x === playerTileX && sw.pos.y === playerTileY && !sw.justToggled) {
+                    // スイッチ状態切替
+                    sw.state = sw.state === 'ON' ? 'OFF' : 'ON';
+                    this.inventory.switches.set(sw.id, sw.state);
+                    this.playSE('switch');
+                    sw.justToggled = true;
+                    
+                    console.log(`Switch ${sw.id} turned ${sw.state}`);
+                    this.updateInventoryUI();
+                    
+                    // 少し待ってからフラグをリセット
+                    setTimeout(() => { sw.justToggled = false; }, 500);
+                }
+            });
+        }
+        
+        // ドア到達判定
+        if (this.mazeData.doors) {
+            this.mazeData.doors.forEach(door => {
+                if (door.pos.x === playerTileX && door.pos.y === playerTileY) {
+                    this.checkDoorConditions(door);
+                }
+            });
+        }
+    }
+    
+    // ドア開閉条件チェック
+    checkDoorConditions(door) {
+        let canOpen = false;
+        let message = '';
+        
+        switch (door.id) {
+            case 'left':
+                canOpen = this.inventory.items.has('key-red');
+                message = canOpen ? 'あかいカギで ひらきました！' : 'あかいカギが ひつようです';
+                break;
+            case 'middle':
+                canOpen = this.inventory.switches.get('switch-green') === 'ON';
+                message = canOpen ? 'みどりスイッチで ひらきました！' : 'みどりスイッチを ONにしてください';
+                break;
+            case 'right':
+                canOpen = this.inventory.badges.has('badge-star');
+                message = canOpen ? 'ほしバッジで ひらきました！' : 'ほしバッジが ひつようです';
+                break;
+        }
+        
+        if (canOpen && door.id === this.currentTask.targetDoor) {
+            // 成功！
+            this.playSE('success');
+            
+            // お題を完了としてマーク
+            const taskIndex = this.sampleTasks.findIndex(task => task.targetDoor === this.currentTask.targetDoor);
+            if (taskIndex >= 0) {
+                this.completedTasks.add(taskIndex);
+            }
+            
+            this.showScreen('success');
+        } else if (canOpen) {
+            // 間違ったドア
+            this.playSE('wrong');
+            if (this.gameMessage) {
+                this.gameMessage.textContent = 'まちがったドアです！ もういちど かくにんしてね';
+            }
+        } else {
+            // 条件不足
+            this.playSE('fail');
+            if (this.gameMessage) {
+                this.gameMessage.textContent = message;
+            }
+        }
     }
 }
 
