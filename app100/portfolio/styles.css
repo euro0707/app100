@@ -310,7 +310,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 350px;
+    height: 400px;
 }
 
 .app-card::before {
@@ -382,6 +382,7 @@ body {
     gap: 0.5rem;
     margin-bottom: 1.5rem;
     flex: 1;
+    align-content: flex-start;
 }
 
 .tech-tag {
