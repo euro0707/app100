@@ -95,6 +95,19 @@ class Portfolio {
                 features: ['RPG風バトル', '段階的問題難易度', 'プレイヤー進行システム', 'セーブ機能'],
                 image: null,
                 status: 'completed'
+            },
+            {
+                id: '007',
+                title: '3つのドア めいろゲーム',
+                description: '4～6歳児向け論理思考学習ゲーム。カギやスイッチを使って3つのドアを開ける段階的パズル。条件・状態・組み合わせの論理を迷路遊びで体験学習。',
+                category: 'education',
+                technologies: ['HTML5', 'Canvas', 'JavaScript', 'タッチ操作', 'ゲームループ'],
+                liveUrl: 'https://euro0707.github.io/app100/apps/007-3doors-logic-maze/',
+                githubUrl: 'https://github.com/euro0707/app100/tree/main/app100/apps/007-3doors-logic-maze',
+                completedDate: '2025-08-11',
+                features: ['段階的学習システム', 'スムーズ移動アニメーション', '衝突判定システム', '論理思考育成'],
+                image: null,
+                status: 'completed'
             }
             // 他のアプリは順次追加
         ];
