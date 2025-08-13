@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagonal Movement Corner Case Test</title>
+</head>
+<body>
+    <h1>斜め移動コーナーケーステスト</h1>
+    <canvas id="testCanvas" width="400" height="400" style="border: 1px solid black;"></canvas>
+    <div id="output"></div>
+
+    <script>
+        // Bresenhamアルゴリズムの動作をシミュレート
+        function testBresenhamPath(x1, y1, x2, y2) {
+            const dx = Math.abs(x2 - x1);
+            const dy = Math.abs(y2 - y1);
+            const sx = x1 < x2 ? 1 : -1;
+            const sy = y1 < y2 ? 1 : -1;
+            let err = dx - dy;
+            
+            let x = x1;
+            let y = y1;
+            const path = [];
+            
+            while (true) {
+                path.push({ x, y });
+                
+                if (x === x2 && y === y2) break;
+                
+                const e2 = 2 * err;
+                if (e2 > -dy) {
+                    err -= dy;
+                    x += sx;
+                }
+                if (e2 < dx) {
+                    err += dx;
+                    y += sy;
+                }
+            }
+            
+            return path;
+        }
+
+        // 視覚化
+        const canvas = document.getElementById('testCanvas');
+        const ctx = canvas.getContext('2d');
+        const tileSize = 40;
+        
+        // グリッド描画
+        function drawGrid() {
+            ctx.strokeStyle = '#ccc';
+            for (let i = 0; i <= 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * tileSize, 0);
+                ctx.lineTo(i * tileSize, 400);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(0, i * tileSize);
+                ctx.lineTo(400, i * tileSize);
+                ctx.stroke();
+            }
+        }
+        
+        // 壁を描画（サンプル）
+        function drawWalls() {
+            ctx.fillStyle = '#333';
+            // L字型の壁
+            ctx.fillRect(1 * tileSize, 1 * tileSize, tileSize, tileSize);
+            ctx.fillRect(2 * tileSize, 1 * tileSize, tileSize, tileSize);
+            ctx.fillRect(1 * tileSize, 2 * tileSize, tileSize, tileSize);
+        }
+        
+        // パスを描画
+        function drawPath(path, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i < path.length; i++) {
+                const p = path[i];
+                const x = p.x * tileSize + tileSize/2;
+                const y = p.y * tileSize + tileSize/2;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+        
+        // 実際の移動軌跡を描画（補間）
+        function drawActualPath(x1, y1, x2, y2, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(x1 * tileSize + tileSize/2, y1 * tileSize + tileSize/2);
+            ctx.lineTo(x2 * tileSize + tileSize/2, y2 * tileSize + tileSize/2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+        
+        // テスト実行
+        drawGrid();
+        drawWalls();
+        
+        // ケース1: 角を通る斜め移動
+        const path1 = testBresenhamPath(0, 0, 3, 3);
+        drawPath(path1, 'blue');
+        drawActualPath(0, 0, 3, 3, 'red');
+        
+        // 結果表示
+        document.getElementById('output').innerHTML = `
+            <h3>分析結果</h3>
+            <p><strong>青線:</strong> Bresenhamアルゴリズムがチェックするタイル</p>
+            <p><strong>赤線:</strong> 実際のプレイヤー移動軌跡（補間）</p>
+            <p><strong>問題:</strong> 赤線が壁の角を通っているように見える</p>
+            <p><strong>パス:</strong> ${JSON.stringify(path1)}</p>
+        `;
+    </script>
+</body>
+</html>
