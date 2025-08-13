@@ -849,8 +849,8 @@ class ThreeDoorsLogicMaze {
         }
         
         // 斜め移動時の経路チェック（壁を通り抜け防止）
-        const currentX = Math.floor(this.playerPosition.x);
-        const currentY = Math.floor(this.playerPosition.y);
+        const currentX = Math.round(this.playerPosition.x);
+        const currentY = Math.round(this.playerPosition.y);
         
         if (this.hasWallBetween(currentX, currentY, targetX, targetY)) {
             console.log('Path blocked by wall from', currentX, currentY, 'to', targetX, targetY);
@@ -873,8 +873,25 @@ class ThreeDoorsLogicMaze {
     
     // 斜め移動時の壁通り抜けチェック
     hasWallBetween(x1, y1, x2, y2) {
-        // 同じタイルまたは隣接タイルの場合はチェック不要
-        if (Math.abs(x2 - x1) <= 1 && Math.abs(y2 - y1) <= 1) {
+        // 同じタイルの場合はチェック不要
+        if (x1 === x2 && y1 === y2) {
+            return false;
+        }
+        
+        // 隣接する斜めタイルでも角通り抜けをチェック
+        if (Math.abs(x2 - x1) === 1 && Math.abs(y2 - y1) === 1) {
+            // 斜め隣接: 角の2つの壁のどちらかがあれば通行不可
+            const wall1 = this.isWall(x1, y2);
+            const wall2 = this.isWall(x2, y1);
+            const blocked = wall1 || wall2;
+            if (blocked) {
+                console.log(`🚫 Diagonal movement blocked: (${x1},${y1}) → (${x2},${y2}), wall1(${x1},${y2}): ${wall1}, wall2(${x2},${y1}): ${wall2}`);
+            }
+            return blocked;
+        }
+        
+        // 直線隣接（縦・横1マス）の場合はチェック不要
+        if ((Math.abs(x2 - x1) === 1 && y1 === y2) || (x1 === x2 && Math.abs(y2 - y1) === 1)) {
             return false;
         }
         
@@ -939,7 +956,7 @@ class ThreeDoorsLogicMaze {
                 return true;
             }
             
-            // 角を通り抜け防止: 隣接する2つのタイルもチェック
+            // 角を通り抜け防止: 隣接する2つのタイルのどちらかが壁なら通行不可
             if (this.isWall(currentX + stepX, currentY) || 
                 this.isWall(currentX, currentY + stepY)) {
                 return true; // 角が塞がれている
