@@ -1,4 +1,4 @@
-// Portfolio website functionality
+// Portfolio website functionality - Updated 2025-08-13
 class Portfolio {
     constructor() {
         this.apps = [];
