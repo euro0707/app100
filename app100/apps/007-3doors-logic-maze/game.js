@@ -249,6 +249,11 @@ class ThreeDoorsLogicMaze {
                 }
             });
         });
+        
+        // キーボード操作の追加
+        document.addEventListener('keydown', (e) => {
+            this.handleKeyDown(e);
+        });
     }
     
     updateTouchPosition(e) {
@@ -471,14 +476,20 @@ class ThreeDoorsLogicMaze {
             doors = [{ id: "left", pos: positions.goalLeft, condition: { type: "hasItem", value: "key-red" }, icon: "🔑" }];
         }
         
+        // パターンに応じたスタート位置を取得
+        let startPos = { x: 1, y: 1 }; // デフォルト
+        if (this.selectedPatternIndex === 3) { // パターン4（十字型）
+            startPos = { x: 4, y: 1 };
+        }
+        
         this.mazeData = {
             id: "sample_maze",
             tileSize: 32,
             width: 10,
             height: 15,
             grid: grid,
-            start: { x: 1, y: 1 },
-            goalArea: positions.goalMiddle,  // 目標エリアも更新
+            start: startPos,
+            goalArea: positions.goalMiddle,
             items: items,
             switches: switches,
             doors: doors
@@ -545,12 +556,13 @@ class ThreeDoorsLogicMaze {
             [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8],
             // L字の横部分  
             [3,7], [3,8], [4,7], [4,8], [5,7], [5,8], [6,7], [6,8], [7,7], [7,8],
+            // カギエリアへの接続路を追加
+            [3,1], [3,2], [3,3], [3,4], [3,5], [3,6],
             // カギエリア（左上）
             [4,2], [4,3], [4,4], [5,2], [5,3], [5,4],
             // スイッチエリア（右中央）
             [7,4], [7,5], [7,6], [8,4], [8,5], [8,6],
-            // 接続路
-            [3,2], [3,3], [3,4], [3,5], [3,6],
+            // スイッチエリアへの接続路
             [6,4], [6,5], [6,6],
             // バッジエリア（右下）
             [5,10], [5,11], [5,12], [6,10], [6,11], [6,12], [7,10], [7,11], [7,12],
@@ -617,7 +629,7 @@ class ThreeDoorsLogicMaze {
         ];
         
         this.applyPaths(grid, paths, width, height);
-        grid[4][1] = 2; // スタート
+        grid[4][1] = 2; // スタート（縦の幹の開始点）
         grid[13][6] = grid[13][7] = grid[13][8] = 3; // ゴール
         
         return { grid, name: "十字型迷路" };
@@ -844,31 +856,111 @@ class ThreeDoorsLogicMaze {
         // 壁チェック（0は壁、1以上は通行可能）
         const tileType = this.mazeData.grid[targetY][targetX];
         if (tileType === 0) {
-            console.log('Cannot move to wall at', targetX, targetY);
             return;
         }
         
-        // 斜め移動時の経路チェック（壁を通り抜け防止）
+        // 隣接タイルのみ移動を許可（長距離移動を防ぐ）
         const currentX = Math.round(this.playerPosition.x);
         const currentY = Math.round(this.playerPosition.y);
+        const deltaX = Math.abs(targetX - currentX);
+        const deltaY = Math.abs(targetY - currentY);
         
-        if (this.hasWallBetween(currentX, currentY, targetX, targetY)) {
-            console.log('Path blocked by wall from', currentX, currentY, 'to', targetX, targetY);
+        // 隣接タイル（1マス以内）のみ許可
+        if (deltaX > 1 || deltaY > 1) {
             return;
         }
         
-        console.log(`Moving to tile (${targetX},${targetY}) - type: ${tileType}`);
+        // 斜め移動時の経路チェック
+        if (deltaX === 1 && deltaY === 1) {
+            const wall1 = this.isWall(currentX, targetY);
+            const wall2 = this.isWall(targetX, currentY);
+            if (wall1 || wall2) {
+                return;
+            }
+        }
 
         // 目標位置設定
         this.playerTarget = { x: targetX, y: targetY };
         this.isMoving = true;
         this.lastProgressTime = Date.now();
-        
-        console.log('Moving from', this.playerPosition, 'toward', this.playerTarget);
     }
     
     stopMoving() {
         this.isMoving = false;
+    }
+    
+    // キーボード操作処理
+    handleKeyDown(e) {
+        // ゲーム画面でのみ有効
+        if (this.currentScreen !== 'game' || this.isMoving) return;
+        
+        let targetX = Math.round(this.playerPosition.x);
+        let targetY = Math.round(this.playerPosition.y);
+        
+        switch (e.key) {
+            case 'ArrowUp':
+            case 'w':
+            case 'W':
+                targetY -= 1;
+                e.preventDefault();
+                break;
+            case 'ArrowDown':
+            case 's':
+            case 'S':
+                targetY += 1;
+                e.preventDefault();
+                break;
+            case 'ArrowLeft':
+            case 'a':
+            case 'A':
+                targetX -= 1;
+                e.preventDefault();
+                break;
+            case 'ArrowRight':
+            case 'd':
+            case 'D':
+                targetX += 1;
+                e.preventDefault();
+                break;
+            default:
+                return; // 対象外のキー
+        }
+        
+        // 移動処理
+        this.moveToPosition(targetX, targetY);
+    }
+    
+    // キーボード用の移動処理
+    moveToPosition(targetX, targetY) {
+        if (!this.mazeData) return;
+        
+        // 境界チェック
+        if (targetX < 0 || targetX >= this.mazeData.width || 
+            targetY < 0 || targetY >= this.mazeData.height) {
+            return;
+        }
+        
+        // 壁チェック
+        const tileType = this.mazeData.grid[targetY][targetX];
+        if (tileType === 0) {
+            return;
+        }
+        
+        // 現在位置から隣接チェック
+        const currentX = Math.round(this.playerPosition.x);
+        const currentY = Math.round(this.playerPosition.y);
+        const deltaX = Math.abs(targetX - currentX);
+        const deltaY = Math.abs(targetY - currentY);
+        
+        // 1マス移動のみ許可
+        if (deltaX + deltaY !== 1) {
+            return;
+        }
+        
+        // 移動実行
+        this.playerTarget = { x: targetX, y: targetY };
+        this.isMoving = true;
+        this.lastProgressTime = Date.now();
     }
     
     // 斜め移動時の壁通り抜けチェック
@@ -1017,6 +1109,8 @@ class ThreeDoorsLogicMaze {
             const progress = Math.min((moveSpeed * deltaTime / 1000) / distance, 1.0);
             this.playerPosition.x += dx * progress;
             this.playerPosition.y += dy * progress;
+            
+            // 移動中は過度な衝突判定を避ける
         }
         
         this.lastProgressTime = currentTime;
@@ -1313,8 +1407,8 @@ class ThreeDoorsLogicMaze {
                     console.log(`Switch ${sw.id} turned ${sw.state}`);
                     this.updateInventoryUI();
                     
-                    // 少し待ってからフラグをリセット
-                    setTimeout(() => { sw.justToggled = false; }, 500);
+                    // 切替防止時間を短縮
+                    setTimeout(() => { sw.justToggled = false; }, 200);
                 }
             });
         }
