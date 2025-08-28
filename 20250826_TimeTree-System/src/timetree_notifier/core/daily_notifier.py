@@ -20,7 +20,10 @@ class DailySummaryNotifier:
     
     def __init__(self, config: Config):
         self.config = config
-        self.line_notifier = LineNotifier(config.notification.line_notify_token)
+        self.line_notifier = LineNotifier(
+            config.notification.line_channel_access_token, 
+            config.notification.line_user_id
+        )
         
     async def send_daily_summary(self, target_date: Optional[date] = None) -> bool:
         """毎朝の予定サマリー送信"""
@@ -292,32 +295,42 @@ class DailySummaryNotifier:
 
 
 class LineNotifier:
-    """LINE Notify通知クラス"""
+    """LINE Messaging API通知クラス"""
     
-    def __init__(self, token: str):
-        self.token = token
-        self.api_url = "https://notify-api.line.me/api/notify"
+    def __init__(self, channel_access_token: str, user_id: str):
+        self.channel_access_token = channel_access_token
+        self.user_id = user_id
+        self.api_url = "https://api.line.me/v2/bot/message/push"
     
     async def send_message(self, message: str) -> NotificationResult:
-        """LINE通知送信"""
+        """LINE通知送信（Messaging API）"""
         try:
             import requests
             
             headers = {
-                "Authorization": f"Bearer {self.token}",
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Authorization": f"Bearer {self.channel_access_token}",
+                "Content-Type": "application/json"
             }
             
-            data = {"message": message}
+            data = {
+                "to": self.user_id,
+                "messages": [
+                    {
+                        "type": "text",
+                        "text": message
+                    }
+                ]
+            }
             
-            response = requests.post(self.api_url, headers=headers, data=data, timeout=10)
+            response = requests.post(self.api_url, headers=headers, json=data, timeout=10)
             
             if response.status_code == 200:
                 return NotificationResult(success=True, message="Notification sent successfully")
             else:
+                error_detail = response.text if response.text else "Unknown error"
                 return NotificationResult(
                     success=False,
-                    error_message=f"HTTP {response.status_code}: {response.text}"
+                    error_message=f"HTTP {response.status_code}: {error_detail}"
                 )
                 
         except Exception as e:

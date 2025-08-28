@@ -28,7 +28,8 @@ timetree:
 
 # LINE通知設定  
 notification:
-  line_notify_token: "${LINE_NOTIFY_TOKEN}"
+  line_channel_access_token: "${LINE_CHANNEL_ACCESS_TOKEN}"
+  line_user_id: "${LINE_USER_ID}"
   max_message_length: 1000
   
   # メッセージテンプレート

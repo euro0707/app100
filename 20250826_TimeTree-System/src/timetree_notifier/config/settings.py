@@ -49,7 +49,8 @@ class TimeTreeConfig(BaseModel):
 
 class NotificationConfig(BaseModel):
     """LINE通知設定"""
-    line_notify_token: str = Field(..., description="LINE Notifyトークン")
+    line_channel_access_token: str = Field(..., description="LINE Messaging API チャンネルアクセストークン")
+    line_user_id: str = Field(..., description="送信先のLINE User ID")
     max_message_length: int = 1000
     greeting: str = "🌅 おはようございます！今日の予定"
     closing: str = "今日も良い一日を！✨"
